@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+/* * {
+  background: important rgb(7,0,117) !important;
+  background: linear-gradient(0deg, rgba(7,0,117,1) 31%, rgba(1,0,22,1) 100%)!important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+  color: white
+}  */
+
+.active {
+  color: red;
+}
