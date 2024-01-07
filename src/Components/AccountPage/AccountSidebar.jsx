@@ -1,20 +1,20 @@
-import { Image,Button, Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton,DrawerHeader,DrawerBody,Input,DrawerFooter, Text, chakra, List } from '@chakra-ui/react'
+import { Image,Button, Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton,DrawerHeader,DrawerBody,Input,DrawerFooter, Text,IconButton } from '@chakra-ui/react'
 import { useRef } from 'react'
 import { useDisclosure } from '@chakra-ui/react'
-import { HomeIcon, ListingIcon, ReservationsIcon, UsersIcon } from './AccountPageIcons'
-import { UnlockIcon } from '@chakra-ui/icons'
+import { HomeIcon, ListingIcon, ReservationsIcon, UsersIcon} from './AccountPageIcons'
+import { HamburgerIcon, UnlockIcon } from '@chakra-ui/icons'
 import { NavLink } from 'react-router-dom'
+import { HOME_PAGE, LISTINGS_PAGE, RESERVATIONS_PAGE,USERS_PAGE } from './account_page_consts'
 
-const AccountSidebar = () => 
+const AccountSidebar = (props) => 
 {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const btnRef = useRef()
+    const {setCurrentPage} = props;
 
     return (
         <>
-          <Button ref={btnRef} colorScheme='teal' onClick={onOpen}>
-            Menu
-          </Button>
+          <Button ref={btnRef} colorScheme='blue' onClick={onOpen} as={IconButton} icon={<HamburgerIcon/>}/>
           <Drawer
             isOpen={isOpen}
             placement='left'
@@ -32,10 +32,10 @@ const AccountSidebar = () =>
             </DrawerHeader>
 
               <DrawerBody display="flex" flexDirection="column" gap="20px">
-                <Button leftIcon={<HomeIcon/>}>Home</Button>
-                <Button leftIcon={<ListingIcon/>}>Listings</Button>
-                <Button leftIcon={<ReservationsIcon />}>Reservations</Button>
-                <Button leftIcon={<UsersIcon/>}>Users</Button>
+                <Button leftIcon={<HomeIcon/>} onClick={()=>setCurrentPage(HOME_PAGE)}>Home</Button>
+                <Button leftIcon={<ListingIcon/>} onClick={()=>setCurrentPage(LISTINGS_PAGE)}>Listings</Button>
+                <Button leftIcon={<ReservationsIcon />} onClick={()=>setCurrentPage(RESERVATIONS_PAGE)}>Reservations</Button>
+                <Button leftIcon={<UsersIcon/>} onClick={()=>setCurrentPage(USERS_PAGE)}>Users</Button>
               </DrawerBody>
     
               <DrawerFooter>

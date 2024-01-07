@@ -1,0 +1,4 @@
+export const HOME_PAGE = "HOME_PAGE";
+export const LISTINGS_PAGE = "LISTINGS_PAGE";
+export const RESERVATIONS_PAGE = "RESERVATIONS_PAGE";
+export const USERS_PAGE = "USERS_PAGE"
