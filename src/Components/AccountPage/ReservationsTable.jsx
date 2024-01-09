@@ -1,9 +1,8 @@
 import { TableContainer,Table, Thead, Tr, Th, Tbody, Td, Tfoot, Link, Image, Box, Text,Stack, Skeleton } from "@chakra-ui/react";
-import parking_spot_example from "../../img/parking_spot_example.png"
 import { useEffect, useState } from "react";
 
 
-export const DataTable = (props) =>
+export const ReservationsTable = (props) =>
 {
     const {columnsNamesList} = props;
     const {rowData} = props;
@@ -39,7 +38,7 @@ export const DataTable = (props) =>
     const [dataLoaded, setDataLoaded] = useState(false);
 
     useEffect(()=>{
-        setTimeout(()=>setDataLoaded(true), 5000);
+        setTimeout(()=>setDataLoaded(true), 1000);
     }, [])
 
     return (

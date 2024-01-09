@@ -1,11 +1,12 @@
 import { Box } from "@chakra-ui/react"
 import AccountSidebar from "./AccountSidebar"
 import { useState } from "react"
-import { HOME_PAGE, LISTINGS_PAGE, RESERVATIONS_PAGE, USERS_PAGE } from "./account_page_consts"
+import { HOME_PAGE, LISTINGS_PAGE, RESERVATIONS_PAGE, USERS_PAGE, LISTING_VIEW } from "./account_page_consts"
 import AccountHomePage from "./AccountHomePage"
 import AccountListingsPage from "./AccountListingsPage"
 import AccountReservationsPage from "./AccountReservationsPage"
 import AccountUsersPage from "./AccountUsersPage"
+import { ListingView } from "./ListingView"
 
 
 const Account = () => {
@@ -16,11 +17,13 @@ const Account = () => {
         case HOME_PAGE:
           return <AccountHomePage />
         case LISTINGS_PAGE:
-          return <AccountListingsPage/>
+          return <AccountListingsPage setCurrentPage={setCurrentPage}/>
         case RESERVATIONS_PAGE:
           return <AccountReservationsPage />
         case USERS_PAGE:
           return <AccountUsersPage />
+        case LISTING_VIEW:
+          return <ListingView />
         default:
           return null;
       }

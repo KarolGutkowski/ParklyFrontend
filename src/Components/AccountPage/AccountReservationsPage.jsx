@@ -1,5 +1,4 @@
-import { DataTable } from "./DataTable";
-import parking_spot_example from "../../img/parking_spot_example.png"
+import { ReservationsTable } from "./ReservationsTable";
 import { Box, Text } from "@chakra-ui/react";
 import { AccountSearchBar } from "./AccountSearchBar";
 
@@ -26,7 +25,7 @@ const AccountReservationsPage = () => {
                 Reservations
             </Text>
             <AccountSearchBar />
-            <DataTable columnsNamesList={columns} rowData={data}/>
+            <ReservationsTable columnsNamesList={columns} rowData={data}/>
         </Box>
     )
 }

@@ -4,6 +4,7 @@ import Login from './Components/Login';
 import Account from './Components/AccountPage/Account'
 import './App.css';
 import HomePage from './Components/HomePage';
+import { ListingView } from './Components/AccountPage/ListingView';
 
 const browserRouter = createBrowserRouter([
   {
@@ -22,7 +23,7 @@ const browserRouter = createBrowserRouter([
   },
   {
     path: "account",
-    element: <Account/>
+    element: <Account/>,
   }
 ]);
 

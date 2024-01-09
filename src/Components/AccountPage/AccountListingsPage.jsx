@@ -1,10 +1,10 @@
-import { Box, Text, Input, Button, IconButton, Icon } from "@chakra-ui/react";
+import { Box, Text, Input, IconButton} from "@chakra-ui/react";
 import ListingsTable from "./ListingsTable";
 import { SearchIcon } from "@chakra-ui/icons";
 import { FilterIcon } from "./AccountPageIcons";
-const AccountListingsPage = () => {
+const AccountListingsPage = (props) => {
     
-    
+    const {setCurrentPage} = props;
 
     return (
         <Box display="flex" flexDir="column" width="80%" margin="auto">
@@ -16,7 +16,7 @@ const AccountListingsPage = () => {
                 <IconButton icon={<SearchIcon />} width="fit-content"/>
                 <Input variant='filled' placeholder='Search' width="50%" />
             </Box>
-            <ListingsTable />
+            <ListingsTable setCurrentPage={setCurrentPage}/>
         </Box>);
 };
 

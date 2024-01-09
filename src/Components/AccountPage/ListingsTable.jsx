@@ -1,14 +1,19 @@
-import { TableContainer,Table, Thead, Tr, Th, Tbody, Td, Tfoot, Link, Image, Box, Text,Stack, Skeleton } from "@chakra-ui/react";
+import { TableContainer,Table, Thead, Tr, Th, Tbody, Td, Link, Image, Stack, Skeleton } from "@chakra-ui/react";
 import parking_spot_example from "../../img/parking_spot_example.png"
 import { useEffect, useState } from "react";
+import { LISTING_VIEW } from "./account_page_consts";
 
 
-const ListingsTable = () =>
+const ListingsTable = (props) =>
 {
+    const {setCurrentPage} = props
+
     const listItems = [];
     const listItem = (<Tr>
                         <Td>
-                            <Link>13fa</Link>
+                            <Link color="blue" onClick={()=>setCurrentPage(LISTING_VIEW)}>         
+                                    13fa
+                            </Link>
                         </Td>
                         <Td>Poland</Td>
                         <Td>Wawrszawa</Td>
@@ -26,7 +31,7 @@ const ListingsTable = () =>
     const [dataLoaded, setDataLoaded] = useState(false);
 
     useEffect(()=>{
-        setTimeout(()=>setDataLoaded(true), 5000);
+        setTimeout(()=>setDataLoaded(true), 1000);
     }, [])
 
     return (
