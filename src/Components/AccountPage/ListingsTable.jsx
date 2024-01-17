@@ -7,32 +7,7 @@ import { LISTING_VIEW } from "./account_page_consts";
 const ListingsTable = (props) =>
 {
     const {setCurrentPage} = props
-
-    const listItems = [];
-    const listItem = (<Tr>
-                        <Td>
-                            <Link color="blue" onClick={()=>setCurrentPage(LISTING_VIEW)}>         
-                                    13fa
-                            </Link>
-                        </Td>
-                        <Td>Poland</Td>
-                        <Td>Wawrszawa</Td>
-                        <Td>Puławska</Td>
-                        <Td>Number</Td>
-                        <Td>No. of spot</Td>
-                        <Td>
-                            <Image src={parking_spot_example} alt="parking spot"/>
-                        </Td>
-                    </Tr>);
-    for(let i = 0;i<20;i++) 
-    {
-        listItems.push(listItem)
-    }
-    const [dataLoaded, setDataLoaded] = useState(false);
-
-    useEffect(()=>{
-        setTimeout(()=>setDataLoaded(true), 1000);
-    }, [])
+    const {listings} = props;
 
     return (
         <>
@@ -45,17 +20,19 @@ const ListingsTable = (props) =>
                             <Th>City</Th>
                             <Th>Street</Th>
                             <Th>Number</Th>
-                            <Th>No. of spot</Th>
                             <Th>Image</Th>
                         </Tr>
                     </Thead>
                         <Tbody>                   
-                            {dataLoaded?listItems:null}                      
+                            {listings? listings.map(item=>
+                                {
+                                    return mapToTableRow(item, setCurrentPage);
+                                }):null}                      
                         </Tbody>
                 </Table>
             </TableContainer>
             {
-                dataLoaded?null:
+                listings?null:
                     <Stack padding={4} spacing={1}>
                         <Skeleton height="70px"/>
                         <Skeleton height="70px"/>
@@ -64,6 +41,24 @@ const ListingsTable = (props) =>
             }
         </>
     );
+}
+
+function mapToTableRow(item, setCurrentPage)
+{
+    return (<Tr>
+        <Td>
+            <Link color="blue" onClick={()=>setCurrentPage(LISTING_VIEW+"13fa")}>         
+                    {item.id}
+            </Link>
+        </Td>
+        <Td>{item.country}</Td>
+        <Td>{item.city}</Td>
+        <Td>{item.street}</Td>
+        <Td>{item.number}</Td>
+        <Td>
+            <Image src={item.image.src} alt={item.image.alt}/>
+        </Td>
+    </Tr>);
 }
 
 export default ListingsTable;

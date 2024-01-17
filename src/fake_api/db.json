@@ -1,0 +1,28 @@
+{
+    "reservations":
+    [
+        {
+            "id": 13,
+            "startDate": "17-01-2023",
+            "endDate": "31-02-2023",
+            "user": "karol1234",
+            "type": "Car",
+            "itemId": 213,
+            "info": "some long text\n tadwafbsdfsdfhjkdfjkhjfdgjshfsjdkfhk\njhdjksnjkdnjkvndfjknvjrebjvnjdfj"
+        } 
+    ],
+    "listings":
+    [
+        {
+            "id": "13fa",
+            "country": "Poland",
+            "city": "Warszawa",
+            "street": "Puławska",
+            "number": 12,
+            "image":{
+                "src": "./static/media/parking_spot_example.b1a03108a34703a3d9e7.png",
+                "alt": "example parking spot"
+            }
+        }
+    ]
+}

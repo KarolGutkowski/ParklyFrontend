@@ -1,12 +1,14 @@
 import { Card,CardHeader, Text, Heading, CardBody, CardFooter, Button, Box, Image, GridItem, Grid } from "@chakra-ui/react";
 import parking_spot_example from "../../img/parking_spot_example.png"
 
-export const ListingView = () => 
+export const ListingView = (props) => 
 {
+    const {id} = props;
+    console.log(id);
     return (
         <Box display="flex" flexDir="column" width="80%" margin="auto">
             <Heading textAlign="center">
-                Listing details
+                Listing {id} details
             </Heading>
             <Card marginTop="10px" >
                 <CardHeader textAlign="center">

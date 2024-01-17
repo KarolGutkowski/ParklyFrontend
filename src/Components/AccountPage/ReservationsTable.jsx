@@ -10,10 +10,40 @@ export const ReservationsTable = (props) =>
 
     columnsNamesList.forEach(name => {
         columns.push(<Th>{name}</Th>);
-    });
-    const listItems = rowData.map(item => {
-        return  (
-            <Tr>
+    });   
+                    
+    return (
+        <>
+            <TableContainer marginTop="10px">
+                <Table variant='simple'>
+                    <Thead>
+                        <Tr>
+                            {columns}
+                        </Tr>
+                    </Thead>
+                        <Tbody>                   
+                            {rowData?rowData.map(item=>
+                                {
+                                    return mapToTableRow(item);
+                                }):null}                      
+                        </Tbody>
+                </Table>
+            </TableContainer>
+            {
+                rowData?null:
+                    <Stack padding={4} spacing={1}>
+                        <Skeleton height="70px"/>
+                        <Skeleton height="70px"/>
+                        <Skeleton height="70px"/>
+                    </Stack>
+            }
+        </>
+    );
+}
+
+function mapToTableRow(item)
+{
+    return (<Tr>
                 <Td>
                     <Link>{item.id}</Link>
                 </Td>
@@ -29,40 +59,5 @@ export const ReservationsTable = (props) =>
                 <Td style={{ overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '100px' }}>
                     {item.info}
                 </Td>
-            </Tr>
-        )
-        
-        });
-                    
-    
-    const [dataLoaded, setDataLoaded] = useState(false);
-
-    useEffect(()=>{
-        setTimeout(()=>setDataLoaded(true), 1000);
-    }, [])
-
-    return (
-        <>
-            <TableContainer marginTop="10px">
-                <Table variant='simple'>
-                    <Thead>
-                        <Tr>
-                            {columns}
-                        </Tr>
-                    </Thead>
-                        <Tbody>                   
-                            {dataLoaded?listItems:null}                      
-                        </Tbody>
-                </Table>
-            </TableContainer>
-            {
-                dataLoaded?null:
-                    <Stack padding={4} spacing={1}>
-                        <Skeleton height="70px"/>
-                        <Skeleton height="70px"/>
-                        <Skeleton height="70px"/>
-                    </Stack>
-            }
-        </>
-    );
+            </Tr>);
 }

@@ -1,7 +1,9 @@
 import { Box, Card, CardHeader, CardBody, CardFooter,Heading, Text, Button } from '@chakra-ui/react'
+import { LISTINGS_PAGE, RESERVATIONS_PAGE } from './account_page_consts';
 
 const cardWith = "40%";
-const AccountHomePage = () => {
+const AccountHomePage = (props) => {
+    const {setCurrentPage} = props;
 
     return (
         <Box display="flex" justifyContent="center" gap="10%" flexWrap="wrap" rowGap="20px">
@@ -20,13 +22,13 @@ const AccountHomePage = () => {
 
         <Card textAlign="center" width={cardWith} boxShadow='outline' p='6' rounded='md' bg='white'>
             <CardHeader >
-                <Heading size='md'>Listings</Heading>
+                <Heading size='md' onC>Listings</Heading>
             </CardHeader>
             <CardBody>
                 <Text>4 234</Text>
             </CardBody>
             <CardFooter alignSelf="center">
-                <Button>Details</Button>
+                <Button onClick={()=>setCurrentPage(LISTINGS_PAGE)}>Details</Button>
             </CardFooter>
         </Card>
 
@@ -38,7 +40,7 @@ const AccountHomePage = () => {
                 <Text>14 003</Text>
             </CardBody>
             <CardFooter alignSelf="center">
-                <Button>Details</Button>
+                <Button onClick={()=>setCurrentPage(RESERVATIONS_PAGE)}>Details</Button>
             </CardFooter>
         </Card>
         </Box>

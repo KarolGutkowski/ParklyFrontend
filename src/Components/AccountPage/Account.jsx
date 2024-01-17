@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react"
+import { Box, List } from "@chakra-ui/react"
 import AccountSidebar from "./AccountSidebar"
 import { useState } from "react"
 import { HOME_PAGE, LISTINGS_PAGE, RESERVATIONS_PAGE, USERS_PAGE, LISTING_VIEW } from "./account_page_consts"
@@ -15,17 +15,19 @@ const Account = () => {
     function renderMainContent() {
       switch(currentPage){
         case HOME_PAGE:
-          return <AccountHomePage />
+          return <AccountHomePage setCurrentPage={setCurrentPage}/>
         case LISTINGS_PAGE:
           return <AccountListingsPage setCurrentPage={setCurrentPage}/>
         case RESERVATIONS_PAGE:
           return <AccountReservationsPage />
         case USERS_PAGE:
           return <AccountUsersPage />
-        case LISTING_VIEW:
-          return <ListingView />
         default:
-          return null;
+          if(currentPage.startsWith(LISTING_VIEW))
+          {
+            const id = currentPage.replace(LISTING_VIEW, "");
+            return <ListingView id={id}/>
+          }
       }
     }
 
