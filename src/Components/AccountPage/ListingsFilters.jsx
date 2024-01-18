@@ -4,10 +4,20 @@ import
     FormControl, FormLabel, Select, Checkbox
 } 
 from "@chakra-ui/react"
+import { useState, useEffect } from "react";
+import { api_address } from "../../api_addres";
 
 export const ListingsFilters = (props)=>
 {
     const {isOpen} = props;
+    const [countries, setCountries] = useState([]);
+    const [cities, setCities] = useState([]);
+
+    useEffect(()=>
+    {   
+        fetchAndSet("countries", setCountries);
+        fetchAndSet("cities", setCities);
+    },[]);
 
     return (
         <Box width="100%">
@@ -23,20 +33,51 @@ export const ListingsFilters = (props)=>
                     <FormControl as='fieldset' width="100%" display="flex" justifyContent="space-evenly">
                         <Box display="flex" flexDirection="column">
                             <FormLabel>Countries</FormLabel>
-                            <Checkbox>Poland</Checkbox>
-                            <Checkbox>Germany</Checkbox>
-                            <Checkbox>Spain</Checkbox>
+                            {
+                                countries.length?
+                                countries.map(country=>
+                                    {
+                                        return <Checkbox>{country}</Checkbox>
+                                    }):
+                                null
+
+                            }
                         </Box>
                         <Box display="flex" flexDir="column">
                             <FormLabel>City</FormLabel>
-                            <Checkbox >Warsaw</Checkbox>
-                            <Checkbox >Cracow</Checkbox>
-                            <Checkbox >Poznan</Checkbox>
-                            <Checkbox >Madrid</Checkbox>
-                            <Checkbox >Berlin</Checkbox>
+                            {
+                                cities.length?
+                                cities.map(city=>
+                                    {
+                                        return <Checkbox>{city}</Checkbox>
+                                    }):
+                                null
+
+                            }
                         </Box>
                     </FormControl>
                 </Box>
             </Collapse>
         </Box>);
+}
+
+function fetchAndSet(endpoint, setterFunc)
+{
+    fetch(`${api_address}\\${endpoint}`)
+        .catch(err => console.error("failed loading data"))
+        .then(result =>
+            {
+                if(result.ok)
+                {
+                    return result.json()
+                }
+                return null;
+            })
+        .then(data =>
+            {
+                if(data !=null)
+                {
+                    setterFunc(data);
+                }
+            })
 }
