@@ -35,12 +35,15 @@ const AccountListingsPage = (props) => {
 
 
     return (
-        <Box display="flex" flexDir="column" width="80%" margin="auto">
-            <Text width="100%" fontSize="3rem" fontWeight="bold" textAlign="center">
-                Listings
-            </Text>
-            <AccountSearchBar/>
-            <ListingsTable setCurrentPage={setCurrentPage} listings={listings}/>
+        <Box>
+            <Box mb='20px'>
+                <Text boxShadow='lg' width="100%" fontSize="3rem" fontWeight="bold" height='81px'
+                      textAlign="center">Listings</Text>
+            </Box>
+            <Box display="flex" flexDir="column" width="80%" margin="auto">
+                <AccountSearchBar/>
+                <ListingsTable setCurrentPage={setCurrentPage} listings={listings}/>
+            </Box>
         </Box>);
 };
 

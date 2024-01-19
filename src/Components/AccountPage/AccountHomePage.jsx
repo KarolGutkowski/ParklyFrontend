@@ -1,48 +1,63 @@
-import { Box, Card, CardHeader, CardBody, CardFooter,Heading, Text, Button } from '@chakra-ui/react'
-import { LISTINGS_PAGE, RESERVATIONS_PAGE } from './account_page_consts';
+import {Box, Card, CardBody, CardFooter, CardHeader, Heading, Text} from '@chakra-ui/react'
+import {LISTINGS_PAGE, RESERVATIONS_PAGE, USERS_PAGE} from './account_page_consts';
+import {ListingIcon, ReservationsIcon, UsersIcon} from "./AccountPageIcons";
 
 const cardWith = "40%";
 const AccountHomePage = (props) => {
+
     const {setCurrentPage} = props;
 
     return (
-        <Box display="flex" justifyContent="center" gap="10%" flexWrap="wrap" rowGap="20px">
-            <Text width="100%" fontSize="3rem" fontWeight="bold" textAlign="center">Home</Text>
-        <Card textAlign="center" width={cardWith} boxShadow='outline' p='6' rounded='md' bg='white'>
-            <CardHeader >
-                <Heading size='md'> Users</Heading>
-            </CardHeader>
-            <CardBody>
-                <Text>100 000</Text>
-            </CardBody>
-            <CardFooter alignSelf="center">
-                <Button>Details</Button>
-            </CardFooter>
-        </Card>
+        <Box>
+            <Box>
+                <Text boxShadow='lg' width="100%" fontSize="3rem" fontWeight="bold" height='81px'
+                      textAlign="center">Home</Text>
+            </Box>
 
-        <Card textAlign="center" width={cardWith} boxShadow='outline' p='6' rounded='md' bg='white'>
-            <CardHeader >
-                <Heading size='md' onC>Listings</Heading>
-            </CardHeader>
-            <CardBody>
-                <Text>4 234</Text>
-            </CardBody>
-            <CardFooter alignSelf="center">
-                <Button onClick={()=>setCurrentPage(LISTINGS_PAGE)}>Details</Button>
-            </CardFooter>
-        </Card>
+            <Box display="flex" justifyContent="center" gap="10%" flexWrap="wrap" rowGap="20px" mt="20px" width="60%"
+                 marginX="auto">
+                <Card borderRadius='2rem' fontSize='1.875rem' color='white' bg="#010016"
+                      onClick={() => setCurrentPage(USERS_PAGE)} cursor="pointer" textAlign="center"
+                      width={cardWith} p='6'>
+                    <CardHeader>
+                        <UsersIcon fontSize="7rem"/>
+                    </CardHeader>
+                    <CardBody>
+                        <Text>100 000</Text>
+                    </CardBody>
+                    <CardFooter alignSelf="center">
+                        <Heading fontSize='2rem' size='md'> Users</Heading>
+                    </CardFooter>
+                </Card>
 
-        <Card textAlign="center" width={cardWith} boxShadow='outline' p='6' rounded='md' bg='white'>
-            <CardHeader >
-                <Heading size='md'>Reservations</Heading>
-            </CardHeader>
-            <CardBody>
-                <Text>14 003</Text>
-            </CardBody>
-            <CardFooter alignSelf="center">
-                <Button onClick={()=>setCurrentPage(RESERVATIONS_PAGE)}>Details</Button>
-            </CardFooter>
-        </Card>
+                <Card borderRadius='2rem' fontSize='1.875rem' color='white' bg="#010016"
+                      onClick={() => setCurrentPage(LISTINGS_PAGE)} cursor="pointer" textAlign="center"
+                      width={cardWith} p='6'>
+                    <CardHeader>
+                        <ListingIcon fontSize="7rem"/>
+                    </CardHeader>
+                    <CardBody>
+                        <Text>4 234</Text>
+                    </CardBody>
+                    <CardFooter alignSelf="center">
+                        <Heading fontSize='2rem' size='md' onC>Listings</Heading>
+                    </CardFooter>
+                </Card>
+
+                <Card borderRadius='2rem' fontSize='1.875rem' color='white' bg="#010016"
+                      onClick={() => setCurrentPage(RESERVATIONS_PAGE)} cursor="pointer"
+                      textAlign="center" width={cardWith} p='6'>
+                    <CardHeader>
+                        <ReservationsIcon fontSize="7rem"/>
+                    </CardHeader>
+                    <CardBody>
+                        <Text>14 003</Text>
+                    </CardBody>
+                    <CardFooter alignSelf="center">
+                        <Heading fontSize='2rem' size='md'>Reservations</Heading>
+                    </CardFooter>
+                </Card>
+            </Box>
         </Box>
     )
 }

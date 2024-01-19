@@ -33,7 +33,7 @@ const Account = () => {
 
     return (
       <>
-        <Box width="80%" margin="auto" marginTop="5px">
+          <Box position="relative" margin="auto">
           <AccountSidebar setCurrentPage={setCurrentPage} />
           {renderMainContent()}
         </Box>

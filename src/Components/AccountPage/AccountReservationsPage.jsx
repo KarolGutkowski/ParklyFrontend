@@ -31,12 +31,16 @@ const AccountReservationsPage = () => {
     })
 
     return (
-        <Box display="flex" flexDir="column" width="80%" margin="auto">
-            <Text width="100%" fontSize="3rem" fontWeight="bold" textAlign="center">
-                Reservations
-            </Text>
-            <AccountSearchBar />
-            <ReservationsTable columnsNamesList={columns} rowData={reserevations}/>
+        <Box>
+            <Box mb='20px'>
+                <Text boxShadow='lg' width="100%" fontSize="3rem" fontWeight="bold" height='81px'
+                      textAlign="center">Reservations</Text>
+            </Box>
+            <Box display="flex" flexDir="column" width="80%"  margin="auto">
+
+                <AccountSearchBar/>
+                <ReservationsTable columnsNamesList={columns} rowData={reserevations}/>
+            </Box>
         </Box>
     )
 }
