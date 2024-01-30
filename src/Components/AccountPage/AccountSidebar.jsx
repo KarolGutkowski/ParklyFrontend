@@ -53,16 +53,16 @@ const AccountSidebar = (props) => {
 
                     <DrawerBody color='white' display="flex" flexDirection="column" gap="20px">
                         <Button variant='solid' colorScheme='whiteAlpha' color='white' bgColor='#010016'
-                                leftIcon={<HomeIcon/>}
+                                leftIcon={<HomeIcon fontSize='1.875rem'/>}
                                 onClick={() => setCurrentPage(HOME_PAGE)}>Home</Button>
                         <Button variant='solid' colorScheme='whiteAlpha' color='white' bgColor='#010016'
-                                leftIcon={<ListingIcon/>}
+                                leftIcon={<ListingIcon fontSize='1.875rem'/>}
                                 onClick={() => setCurrentPage(LISTINGS_PAGE)}>Listings</Button>
                         <Button variant='solid' colorScheme='whiteAlpha' color='white' bgColor='#010016'
-                                leftIcon={<ReservationsIcon/>}
+                                leftIcon={<ReservationsIcon fontSize='1.875rem'/>}
                                 onClick={() => setCurrentPage(RESERVATIONS_PAGE)}>Reservations</Button>
                         <Button variant='solid' colorScheme='whiteAlpha' color='white' bgColor='#010016'
-                                leftIcon={<UsersIcon/>}
+                                leftIcon={<UsersIcon fontSize='1.875rem'/>}
                                 onClick={() => setCurrentPage(USERS_PAGE)}>Users</Button>
                     </DrawerBody>
 

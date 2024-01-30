@@ -1,38 +1,35 @@
-import { TableContainer,Table, Thead, Tr, Th, Tbody, Td, Link, Image, Stack, Skeleton } from "@chakra-ui/react";
-import parking_spot_example from "../../img/parking_spot_example.png"
-import { useEffect, useState } from "react";
-import { LISTING_VIEW } from "./account_page_consts";
+import {Image, Link, Skeleton, Stack, Table, TableContainer, Tbody, Td, Th, Thead, Tr} from "@chakra-ui/react";
+import {LISTING_VIEW} from "./account_page_consts";
 
 
-const ListingsTable = (props) =>
-{
+const ListingsTable = (props) => {
     const {setCurrentPage} = props
+    const {setParkingDetails} = props
     const {listings} = props;
 
     return (
         <>
             <TableContainer marginTop="10px">
-                <Table variant='simple'>
+                <Table style={{borderCollapse: "separate", borderSpacing: "0 1rem"}} variant='simple'>
                     <Thead>
                         <Tr>
-                            <Th>Id</Th>
-                            <Th>Country</Th>
-                            <Th>City</Th>
-                            <Th>Street</Th>
-                            <Th>Number</Th>
-                            <Th>Image</Th>
+                            <Th fontSize='1rem'>Id</Th>
+                            <Th fontSize='1rem'>Country</Th>
+                            <Th fontSize='1rem'>City</Th>
+                            <Th fontSize='1rem'>Street</Th>
+                            <Th fontSize='1rem'>Number</Th>
+                            <Th fontSize='1rem'>Image</Th>
                         </Tr>
                     </Thead>
-                        <Tbody>                   
-                            {listings? listings.map(item=>
-                                {
-                                    return mapToTableRow(item, setCurrentPage);
-                                }):null}                      
-                        </Tbody>
+                    <Tbody>
+                        {listings ? listings.map(item => {
+                            return mapToTableRow(item, setCurrentPage, setParkingDetails);
+                        }) : null}
+                    </Tbody>
                 </Table>
             </TableContainer>
             {
-                listings?null:
+                listings ? null :
                     <Stack padding={4} spacing={1}>
                         <Skeleton height="70px"/>
                         <Skeleton height="70px"/>
@@ -43,19 +40,21 @@ const ListingsTable = (props) =>
     );
 }
 
-function mapToTableRow(item, setCurrentPage)
-{
-    return (<Tr>
-        <Td>
-            <Link color="blue" onClick={()=>setCurrentPage(LISTING_VIEW+"13fa")}>         
-                    {item.id}
+function mapToTableRow(item, setCurrentPage, setParkingDetails) {
+    return (<Tr bgColor='#EFD6D6'>
+        <Td borderLeftRadius='10px' fontSize='1.25rem'>
+            <Link color="blue" onClick={() => {
+                setCurrentPage(LISTING_VIEW + item.id)
+                setParkingDetails(item)
+            }}>
+                {item.id}
             </Link>
         </Td>
-        <Td>{item.country}</Td>
-        <Td>{item.city}</Td>
-        <Td>{item.street}</Td>
-        <Td>{item.number}</Td>
-        <Td>
+        <Td fontSize='1.25rem'>{item.country}</Td>
+        <Td fontSize='1.25rem'>{item.city}</Td>
+        <Td fontSize='1.25rem'>{item.street}</Td>
+        <Td fontSize='1.25rem'>{item.number}</Td>
+        <Td fontSize='1.25rem' borderRightRadius='10px'>
             <Image src={item.image.src} alt={item.image.alt}/>
         </Td>
     </Tr>);

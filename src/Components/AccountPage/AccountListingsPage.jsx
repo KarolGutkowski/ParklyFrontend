@@ -8,30 +8,27 @@ import { AccountSearchBar } from "./AccountSearchBar";
 const AccountListingsPage = (props) => {
     
     const {setCurrentPage} = props;
+    const {setParkingDetails} = props;
     const [listings, setListings] = useState(null);
 
     useEffect(()=>
     {
         fetch("http://localhost:10000/listings")
-        .catch(err=>console.error("failed looading listings"))
-        .then(result=>
-            {
-                if(!result.ok)
-                {
+            .catch(err => console.error("failed looading listings"))
+            .then(result => {
+                if (!result.ok) {
                     console.error("error loading reservations");
                     return null;
                 }
 
                 return result.json();
             })
-        .then(data=>
-            {
-                if(data)
-                {
+            .then(data => {
+                if (data) {
                     setListings(data);
                 }
             })
-    },[])
+    }, [])
 
 
     return (
@@ -42,7 +39,7 @@ const AccountListingsPage = (props) => {
             </Box>
             <Box display="flex" flexDir="column" width="80%" margin="auto">
                 <AccountSearchBar/>
-                <ListingsTable setCurrentPage={setCurrentPage} listings={listings}/>
+                <ListingsTable setParkingDetails={setParkingDetails} setCurrentPage={setCurrentPage} listings={listings}/>
             </Box>
         </Box>);
 };
