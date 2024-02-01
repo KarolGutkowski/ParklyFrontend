@@ -1,10 +1,9 @@
 import {useEffect, useState} from "react";
 import {Box, Text} from "@chakra-ui/react";
-import {AccountSearchBar} from "./AccountSearchBar";
 import {UsersTable} from "./UsersTable";
 import {UsersSearchBar} from "./UsersSearchBar";
 
-const AccountUsersPage = () => {
+const AccountUsersPage = ({setUserDetails, setCurrentPage}) => {
     const [users, setUsers] = useState([
         {
             "id": 21,
@@ -44,7 +43,9 @@ const AccountUsersPage = () => {
             <Box display="flex" flexDir="column" width="80%" margin="auto">
 
                 <UsersSearchBar/>
-                <UsersTable columnsNamesList={columns} rowData={users}/>
+                <UsersTable columnsNamesList={columns} rowData={users} setCurrentPage={setCurrentPage}
+                            setUserDetails={setUserDetails}
+                />
             </Box>
         </Box>
     )

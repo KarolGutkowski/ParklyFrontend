@@ -1,9 +1,8 @@
 import {Link, Skeleton, Stack, Table, TableContainer, Tbody, Td, Th, Thead, Tr} from "@chakra-ui/react";
+import {USER_VIEW} from "./account_page_consts";
 
 
-export const UsersTable = (props) => {
-    const {columnsNamesList} = props;
-    const {rowData} = props;
+export const UsersTable = ({columnsNamesList, rowData, setCurrentPage, setUserDetails}) => {
     const columns = [];
 
     columnsNamesList.forEach(name => {
@@ -21,7 +20,7 @@ export const UsersTable = (props) => {
                     </Thead>
                     <Tbody>
                         {rowData ? rowData.map(item => {
-                            return mapToTableRow(item);
+                            return mapToTableRow(item, setCurrentPage, setUserDetails);
                         }) : null}
                     </Tbody>
                 </Table>
@@ -38,10 +37,15 @@ export const UsersTable = (props) => {
     );
 }
 
-function mapToTableRow(item) {
+function mapToTableRow(item, setCurrentPage, setUserDetails) {
     return (<Tr bgColor='#EFD6D6'>
         <Td paddingY='2rem' fontSize='1.25rem'>
-            <Link>{item.username}</Link>
+            <Link color="blue" onClick={() => {
+                setCurrentPage(USER_VIEW + item.id)
+                setUserDetails(item)
+            }}>
+                {item.username}
+            </Link>
         </Td>
         <Td paddingY='2rem' fontSize='1.25rem'>{item.firstName}</Td>
         <Td paddingY='2rem' fontSize='1.25rem'>{item.lastName}</Td>

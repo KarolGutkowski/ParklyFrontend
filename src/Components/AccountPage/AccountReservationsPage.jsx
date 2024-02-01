@@ -1,31 +1,34 @@
-import { ReservationsTable } from "./ReservationsTable";
-import { Box, Text } from "@chakra-ui/react";
-import { AccountSearchBar } from "./AccountSearchBar";
-import { useState, useEffect } from "react";
+import {ReservationsTable} from "./ReservationsTable";
+import {Box, Text} from "@chakra-ui/react";
+import {AccountSearchBar} from "./AccountSearchBar";
+import {useEffect, useState} from "react";
 import {ReservationsSerachBar} from "./ReservationsSerachBar";
 
 const AccountReservationsPage = () => {
-    const [reserevations, setReserevations]= useState(null);
+    const [reserevations, setReserevations] = useState([{
+        "id": 13,
+        "startDate": "17-01-2023",
+        "endDate": "31-02-2023",
+        "user": "karol1234",
+        "type": "Car",
+        "itemId": 213,
+        "info": "some long text\n tadwafbsdfsdfhjkdfjkhjfdgjshfsjdkfhk\njhdjksnjkdnjkvndfjknvjrebjvnjdfj"
+    }]);
     const columns = [
         "Id", "Start Date", "End Date", "User", "Type", "Item id", "Info"
     ];
 
-    useEffect(()=>
-    {
-        fetch("http://localhost:10000/reservations")
-        .then(result=>
-            {
-                if (!result.ok)
-                {
+    useEffect(() => {
+        fetch("http://localhost:3000/reservations")
+            .then(result => {
+                if (!result.ok) {
                     console.error("error loading reservations");
                     return null;
                 }
                 return result.json();
             })
-        .then(data => 
-            {
-                if(data)
-                {
+            .then(data => {
+                if (data) {
                     setReserevations(data);
                 }
             })

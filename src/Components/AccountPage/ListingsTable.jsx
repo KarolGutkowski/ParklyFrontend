@@ -2,11 +2,7 @@ import {Image, Link, Skeleton, Stack, Table, TableContainer, Tbody, Td, Th, Thea
 import {LISTING_VIEW} from "./account_page_consts";
 
 
-const ListingsTable = (props) => {
-    const {setCurrentPage} = props
-    const {setParkingDetails} = props
-    const {listings} = props;
-
+const ListingsTable = ({setCurrentPage, setParkingDetails, listings}) => {
     return (
         <>
             <TableContainer marginTop="10px">

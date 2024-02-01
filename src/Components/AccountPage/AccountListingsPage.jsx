@@ -1,19 +1,36 @@
-import { Box, Text, Input, IconButton} from "@chakra-ui/react";
+import {Box, Text} from "@chakra-ui/react";
 import ListingsTable from "./ListingsTable";
-import { SearchIcon } from "@chakra-ui/icons";
-import { FilterIcon } from "./AccountPageIcons";
-import { useEffect, useState } from "react";
-import { AccountSearchBar } from "./AccountSearchBar";
+import {useEffect, useState} from "react";
+import {AccountSearchBar} from "./AccountSearchBar";
 
-const AccountListingsPage = (props) => {
-    
-    const {setCurrentPage} = props;
-    const {setParkingDetails} = props;
-    const [listings, setListings] = useState(null);
+const AccountListingsPage = ({setCurrentPage, setParkingDetails}) => {
+    const [listings, setListings] = useState([
+        {
+            "id": "13fa",
+            "country": "Poland",
+            "city": "Warszawa",
+            "street": "Puławska",
+            "number": 12,
+            "image": {
+                "src": "./static/media/parking_spot_example.b1a03108a34703a3d9e7.png",
+                "alt": "example parking spot"
+            }
+        },
+        {
+            "id": "14fa",
+            "country": "Nigeria",
+            "city": "Shit city",
+            "street": "Shit street",
+            "number": 42,
+            "image": {
+                "src": "./static/media/parking_spot_example.b1a03108a34703a3d9e7.png",
+                "alt": "example parking spot"
+            }
+        }
+    ]);
 
-    useEffect(()=>
-    {
-        fetch("http://localhost:10000/listings")
+    useEffect(() => {
+        fetch("http://localhost:3000/listings")
             .catch(err => console.error("failed looading listings"))
             .then(result => {
                 if (!result.ok) {
@@ -39,7 +56,8 @@ const AccountListingsPage = (props) => {
             </Box>
             <Box display="flex" flexDir="column" width="80%" margin="auto">
                 <AccountSearchBar/>
-                <ListingsTable setParkingDetails={setParkingDetails} setCurrentPage={setCurrentPage} listings={listings}/>
+                <ListingsTable setParkingDetails={setParkingDetails} setCurrentPage={setCurrentPage}
+                               listings={listings}/>
             </Box>
         </Box>);
 };
