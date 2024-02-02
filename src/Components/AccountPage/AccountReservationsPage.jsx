@@ -1,38 +1,19 @@
-import {ReservationsTable} from "./ReservationsTable";
-import {Box, Text} from "@chakra-ui/react";
-import {AccountSearchBar} from "./AccountSearchBar";
-import {useEffect, useState} from "react";
+import { ReservationsTable } from "./ReservationsTable";
+import { Box, Text } from "@chakra-ui/react";
+import { AccountSearchBar } from "./AccountSearchBar";
+import { useState, useEffect } from "react";
 import {ReservationsSerachBar} from "./ReservationsSerachBar";
+import { api_address } from "../../api_addres";
+import {reservations_columns} from "./account_page_consts"
+import { fetchReservations } from "./fetchReservations";
 
 const AccountReservationsPage = () => {
-    const [reserevations, setReserevations] = useState([{
-        "id": 13,
-        "startDate": "17-01-2023",
-        "endDate": "31-02-2023",
-        "user": "karol1234",
-        "type": "Car",
-        "itemId": 213,
-        "info": "some long text\n tadwafbsdfsdfhjkdfjkhjfdgjshfsjdkfhk\njhdjksnjkdnjkvndfjknvjrebjvnjdfj"
-    }]);
-    const columns = [
-        "Id", "Start Date", "End Date", "User", "Type", "Item id", "Info"
-    ];
+    const [reserevations, setReserevations]= useState(null);   
 
-    useEffect(() => {
-        fetch("http://localhost:3000/reservations")
-            .then(result => {
-                if (!result.ok) {
-                    console.error("error loading reservations");
-                    return null;
-                }
-                return result.json();
-            })
-            .then(data => {
-                if (data) {
-                    setReserevations(data);
-                }
-            })
-    })
+    useEffect(()=>
+    {
+        fetchReservations(setReserevations);
+    },[])
 
     return (
         <Box>
@@ -43,7 +24,7 @@ const AccountReservationsPage = () => {
             <Box display="flex" flexDir="column" width="80%" margin="auto">
 
                 <ReservationsSerachBar/>
-                <ReservationsTable columnsNamesList={columns} rowData={reserevations}/>
+                <ReservationsTable columnsNamesList={reservations_columns} rowData={reserevations}/>
             </Box>
         </Box>
     )
