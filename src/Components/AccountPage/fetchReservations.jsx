@@ -22,6 +22,7 @@ export const fetchReservations = (reservationsSetter) =>{
 
 
 export const fetchReservationsForId = (reservationsSetter, id) =>{
+    console.log(id);
     fetch(`${api_address}/reservations`)
     .then(result=>
         {

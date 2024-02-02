@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import {Box, Text} from "@chakra-ui/react";
 import {UsersTable} from "./UsersTable";
 import {UsersSearchBar} from "./UsersSearchBar";
+import { api_address } from "../../api_addres";
 
 const AccountUsersPage = ({setUserDetails, setCurrentPage}) => {
     const [users, setUsers] = useState([
@@ -18,21 +19,21 @@ const AccountUsersPage = ({setUserDetails, setCurrentPage}) => {
         "Username", "First name", "Last name", "Email", "Date of birth"
     ];
 
-    useEffect(() => {
-        fetch("http://localhost:3000/reservations")
-            .then(result => {
-                if (!result.ok) {
-                    console.error("error loading users");
-                    return null;
-                }
-                return result.json();
-            })
-            .then(data => {
-                if (data) {
-                    setUsers(data);
-                }
-            })
-    })
+    // useEffect(() => {
+    //     fetch(`${api_address}/reservations`)
+    //         .then(result => {
+    //             if (!result.ok) {
+    //                 console.error("error loading users");
+    //                 return null;
+    //             }
+    //             return result.json();
+    //         })
+    //         .then(data => {
+    //             if (data) {
+    //                 setUsers(data);
+    //             }
+    //         })
+    // })
 
     return (
         <Box>
