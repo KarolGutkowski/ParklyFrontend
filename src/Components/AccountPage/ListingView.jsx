@@ -39,7 +39,7 @@ export const ListingView = (props) => {
                     </CardHeader>
                     <CardBody display='flex'>
                         <Box mr='1rem' width='50%'>
-                            <Image src={parking_spot_example} alt="parking spot" height="256px" width="521px"/>
+                            <Image src={parkingDetails.image.src} alt={parkingDetails.image.alt} height="256px" width="521px"/>
                         </Box >
                         {listingDisplayMode===VIEW_MODE?
                             <Box width="70%">

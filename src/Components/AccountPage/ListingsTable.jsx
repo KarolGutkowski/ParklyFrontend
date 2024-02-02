@@ -37,7 +37,7 @@ const ListingsTable = ({setCurrentPage, setParkingDetails, listings}) => {
 }
 
 function mapToTableRow(item, setCurrentPage, setParkingDetails) {
-    return (<Tr bgColor='#EFD6D6'>
+    return (<Tr bgColor='#c8e3fa'>
         <Td borderLeftRadius='10px' fontSize='1.25rem'>
             <Link color="blue" onClick={() => {
                 setCurrentPage(LISTING_VIEW + item.id)

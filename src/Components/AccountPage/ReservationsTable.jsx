@@ -39,7 +39,7 @@ export const ReservationsTable = (props) => {
 }
 
 function mapToTableRow(item) {
-    return (<Tr bgColor='#EFD6D6'>
+    return (<Tr bgColor='#c8e3fa'>
         <Td paddingY='2rem' fontSize='1.25rem'>
             <Link>{item.id}</Link>
         </Td>
