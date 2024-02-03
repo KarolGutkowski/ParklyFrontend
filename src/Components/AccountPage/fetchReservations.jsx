@@ -2,9 +2,13 @@ import { api_address } from "../../api_addres";
 
 export const fetchReservations = (reservationsSetter) =>{
         fetch(`${api_address}/reservations`)
+        .catch(error => {
+            console.log("failed loading reservations:", error);
+            reservationsSetter([]);
+        })
         .then(result=>
             {
-                if (!result.ok)
+                if (!result?.ok)
                 {
                     console.error("error loading reservations");
                     return null;
@@ -24,9 +28,13 @@ export const fetchReservations = (reservationsSetter) =>{
 export const fetchReservationsForId = (reservationsSetter, id) =>{
     console.log(id);
     fetch(`${api_address}/reservations`)
+    .catch(error => {
+        console.log("failed loading reservations:", error);
+        reservationsSetter([]);
+    })
     .then(result=>
         {
-            if (!result.ok)
+            if (!result?.ok)
             {
                 console.error("error loading reservations");
                 return null;

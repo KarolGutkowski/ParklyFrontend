@@ -21,11 +21,12 @@
     "react-router-dom": "^6.21.1",
     "react-scripts": "5.0.1",
     "sort-by": "^1.2.0",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "zustand": "^4.5.0"
   },
   "scripts": {
     "start": "react-scripts start",
-    "mock-server": "json-server fake_api/db.json --port 10000 --delay 1500",
+    "mock-server": "json-server ./src/fake_api/db.json --port 10000",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

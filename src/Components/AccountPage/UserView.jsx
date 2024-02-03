@@ -1,13 +1,16 @@
-import {Box, Button, Card, CardBody, CardFooter, CardHeader, Heading, Image, Text} from "@chakra-ui/react";
+import {Box, Button, Card, CardBody, CardFooter, CardHeader, Center, Heading, Image, Text} from "@chakra-ui/react";
 import parking_spot_example from "../../img/parking_spot_example.png"
 import {USERS_PAGE} from "./account_page_consts";
 import {ReservationsTable} from "./ReservationsTable";
 import {useState} from "react";
 import {UserEdition} from "./UserEdition";
+import user_img from "../../img/example_profile_pict.jpg";
+import { useCurrentViewStore } from "../../zustand/current_view_store";
 
-export const UserView = ({id, userDetails, setCurrentPage}) => {
+export const UserView = ({id, userDetails}) => {
     const [isEditingMode, setIsEditingMode] = useState(false)
 
+    const setCurrentView = useCurrentViewStore((state)=>state.changeView);
 
     return (
         <Box>
@@ -16,15 +19,15 @@ export const UserView = ({id, userDetails, setCurrentPage}) => {
                       textAlign="center">User</Text>
             </Box>
             <Box display="flex" flexDir="column" width="60%" margin="auto">
-                <Card bgColor='#EFD6D6' marginTop="10px">
+                <Card bgColor='transparent' marginTop="10px">
                     <CardHeader textAlign="center">
                         <Button ml='1rem' left='0' position='absolute' colorScheme='blackAlpha' bgColor='#010016'
-                                onClick={() => setCurrentPage(USERS_PAGE)}>Back</Button>
+                                onClick={() => setCurrentView(USERS_PAGE)}>Back</Button>
                         <Heading margin='auto' fontSize='1.875rem' size='md'> User {id} details</Heading>
                     </CardHeader>
                     <CardBody display='flex'>
-                        <Box mr='1rem' width='50%'>
-                            <Image src={userDetails.image.src} alt="parking spot" height="auto" width="100%"/>
+                        <Box mr='1rem' width='30%' justifyContent="center">
+                            <Image src={user_img} alt="parking spot" height="200px" width="auto" margin="auto"/>
                         </Box>
                         <Box hidden={isEditingMode}>
                             <Text fontSize='1.5rem'>Username: {userDetails.username}</Text>
@@ -44,13 +47,14 @@ export const UserView = ({id, userDetails, setCurrentPage}) => {
                         </Box>
                     </CardFooter>
                 </Card>
+                <Box  display="flex" flexDir="column" width="100%" margin="2rem auto 0 auto">
+                    <Text width="100%" fontSize="2.5rem" fontWeight="bold" textAlign="center">Reservations</Text>
+                    <ReservationsTable columnsNamesList={[
+                        "Id", "Start Date", "End Date", "User", "Type", "Item id", "Info"
+                    ]} rowData={null}/>
+                </Box>
             </Box>
-            <Box  display="flex" flexDir="column" width="80%" margin="2rem auto 0 auto">
-                <Text width="100%" fontSize="2.5rem" fontWeight="bold" textAlign="center">Reservations</Text>
-                <ReservationsTable columnsNamesList={[
-                    "Id", "Start Date", "End Date", "User", "Type", "Item id", "Info"
-                ]} rowData={null}/>
-            </Box>
+            
         </Box>
     );
 }

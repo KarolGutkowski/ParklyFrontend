@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { RemoveListing } from "./ConfirmRemoveListingAlert";
 import { SaveListingChanges } from "./SaveListingsChanges";
 import { fetchReservationsForId } from "./fetchReservations";
-
+import { useCurrentViewStore } from "../../zustand/current_view_store";
 
 const VIEW_MODE = "VIEW_MODE"
 const EDIT_MODE = "EDIT_MODE"
@@ -14,7 +14,8 @@ const EDIT_MODE = "EDIT_MODE"
 export const ListingView = (props) => {
     const {id} = props;
     const {parkingDetails} = props;
-    const {setCurrentPage} = props;
+
+    const setCurrentView = useCurrentViewStore((state)=>state.changeView);
 
     const [listingDisplayMode, setlistingDisplayMode] = useState(VIEW_MODE);
     const [reservationsForListing, setReserevationsForListing] = useState(null);
@@ -31,10 +32,10 @@ export const ListingView = (props) => {
                       textAlign="center">Listing view</Text>
             </Box>
             <Box display="flex" flexDir="column" width="60%" margin="auto">
-                <Card /*bgColor='#EFD6D6'*/ marginTop="10px" overflow='hidden' variant='outline'>
+                <Card marginTop="10px" overflow='hidden' variant='outline'>
                     <CardHeader textAlign="center">
                         <Button ml='1rem' left='0' position='absolute' colorScheme='blue'
-                                onClick={() => setCurrentPage(LISTINGS_PAGE)}>Back</Button>
+                                onClick={() => setCurrentView(LISTINGS_PAGE)}>Back</Button>
                         <Heading margin='auto' fontSize='1.875rem' size='md'> Listing {id} details</Heading>
                     </CardHeader>
                     <CardBody display='flex'>

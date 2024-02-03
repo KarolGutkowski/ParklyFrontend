@@ -4,8 +4,10 @@ import {useEffect, useState} from "react";
 import {AccountSearchBar} from "./AccountSearchBar";
 import { api_address } from "../../api_addres";
 
-const AccountListingsPage = ({setCurrentPage, setParkingDetails}) => {
+
+const AccountListingsPage = ({setParkingDetails}) => {
     const [listings, setListings] = useState(null);
+
 
     useEffect(() => {
         fetch(`${api_address}/listings`)
@@ -38,7 +40,7 @@ const AccountListingsPage = ({setCurrentPage, setParkingDetails}) => {
             </Box>
             <Box display="flex" flexDir="column" width="80%" margin="auto">
                 <AccountSearchBar/>
-                <ListingsTable setParkingDetails={setParkingDetails} setCurrentPage={setCurrentPage}
+                <ListingsTable setParkingDetails={setParkingDetails}
                                listings={listings}/>
             </Box>
         </Box>);

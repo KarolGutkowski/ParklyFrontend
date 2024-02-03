@@ -1,8 +1,11 @@
 import {Image, Link, Skeleton, Stack, Table, TableContainer, Tbody, Td, Th, Thead, Tr} from "@chakra-ui/react";
 import {LISTING_VIEW} from "./account_page_consts";
+import { useCurrentViewStore } from '../../zustand/current_view_store';
 
+const ListingsTable = ({setParkingDetails, listings}) => {
 
-const ListingsTable = ({setCurrentPage, setParkingDetails, listings}) => {
+    const setCurrentView = useCurrentViewStore((state)=>state.changeView);
+
     return (
         <>
             <TableContainer marginTop="10px">
@@ -19,7 +22,7 @@ const ListingsTable = ({setCurrentPage, setParkingDetails, listings}) => {
                     </Thead>
                     <Tbody>
                         {listings ? listings.map(item => {
-                            return mapToTableRow(item, setCurrentPage, setParkingDetails);
+                            return mapToTableRow(item, setCurrentView, setParkingDetails);
                         }) : null}
                     </Tbody>
                 </Table>

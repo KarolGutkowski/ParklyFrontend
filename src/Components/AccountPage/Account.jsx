@@ -8,33 +8,34 @@ import AccountReservationsPage from "./AccountReservationsPage"
 import AccountUsersPage from "./AccountUsersPage"
 import { ListingView } from "./ListingView"
 import {UserView} from "./UserView";
+import { useCurrentViewStore } from "../../zustand/current_view_store"
 
 
 const Account = () => {
-    const [currentPage, setCurrentPage] = useState(HOME_PAGE);
     const [parkingDetails, setParkingDetails] = useState(null);
     const [userDetails, setUserDetails] = useState(null);
+    const currentView = useCurrentViewStore((state)=> state.currentView);
 
     function renderMainContent() {
-        switch(currentPage){
+        switch(currentView){
             case HOME_PAGE:
-                return <AccountHomePage setCurrentPage={setCurrentPage}/>
+                return <AccountHomePage />
             case LISTINGS_PAGE:
-                return <AccountListingsPage setParkingDetails={setParkingDetails} setCurrentPage={setCurrentPage}/>
+                return <AccountListingsPage setParkingDetails={setParkingDetails}/>
             case RESERVATIONS_PAGE:
                 return <AccountReservationsPage />
             case USERS_PAGE:
-                return <AccountUsersPage setUserDetails={setUserDetails} setCurrentPage={setCurrentPage} />
+                return <AccountUsersPage setUserDetails={setUserDetails} />
             default:
-                if(currentPage.startsWith(LISTING_VIEW))
+                if(currentView.startsWith(LISTING_VIEW))
                 {
-                    const id = currentPage.replace(LISTING_VIEW, "");
-                    return <ListingView setCurrentPage={setCurrentPage} id={id} parkingDetails={parkingDetails}/>
+                    const id = currentView.replace(LISTING_VIEW, "");
+                    return <ListingView setCurrentPage={currentView} id={id} parkingDetails={parkingDetails}/>
                 }
-                if(currentPage.startsWith(USER_VIEW))
+                if(currentView.startsWith(USER_VIEW))
                 {
-                    const id = currentPage.replace(USER_VIEW, "");
-                    return <UserView setCurrentPage={setCurrentPage} id={id} userDetails={userDetails}/>
+                    const id = currentView.replace(USER_VIEW, "");
+                    return <UserView setCurrentPage={currentView} id={id} userDetails={userDetails}/>
                 }
 
         }
@@ -43,7 +44,7 @@ const Account = () => {
     return (
         <>
             <Box position="relative" margin="auto">
-                <AccountSidebar setCurrentPage={setCurrentPage} />
+                <AccountSidebar />
                 {renderMainContent()}
             </Box>
         </>

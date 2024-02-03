@@ -3,8 +3,9 @@ import {Box, Text} from "@chakra-ui/react";
 import {UsersTable} from "./UsersTable";
 import {UsersSearchBar} from "./UsersSearchBar";
 import { api_address } from "../../api_addres";
+import user_img from "../../img/example_profile_pict.jpg";
 
-const AccountUsersPage = ({setUserDetails, setCurrentPage}) => {
+const AccountUsersPage = ({setUserDetails}) => {
     const [users, setUsers] = useState([
         {
             "id": 21,
@@ -13,7 +14,10 @@ const AccountUsersPage = ({setUserDetails, setCurrentPage}) => {
             "lastName": "Wojtyła",
             "email": "superEmail@gmail.com",
             "dateOfBirth": "01.01.2005",
-            
+            image:{
+                src: {user_img},
+                alt: "user avatar"
+            }
         }]);
     const columns = [
         "Username", "First name", "Last name", "Email", "Date of birth"
@@ -44,7 +48,7 @@ const AccountUsersPage = ({setUserDetails, setCurrentPage}) => {
             <Box display="flex" flexDir="column" width="80%" margin="auto">
 
                 <UsersSearchBar/>
-                <UsersTable columnsNamesList={columns} rowData={users} setCurrentPage={setCurrentPage}
+                <UsersTable columnsNamesList={columns} rowData={users}
                             setUserDetails={setUserDetails}
                 />
             </Box>
