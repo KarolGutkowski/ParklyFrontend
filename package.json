@@ -25,6 +25,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "mock-server": "json-server fake_api/db.json --port 10000 --delay 1500",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

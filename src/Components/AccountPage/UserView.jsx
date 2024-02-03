@@ -24,7 +24,7 @@ export const UserView = ({id, userDetails, setCurrentPage}) => {
                     </CardHeader>
                     <CardBody display='flex'>
                         <Box mr='1rem' width='50%'>
-                            <Image src={parking_spot_example} alt="parking spot" height="auto" width="100%"/>
+                            <Image src={userDetails.image.src} alt="parking spot" height="auto" width="100%"/>
                         </Box>
                         <Box hidden={isEditingMode}>
                             <Text fontSize='1.5rem'>Username: {userDetails.username}</Text>

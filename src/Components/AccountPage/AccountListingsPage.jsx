@@ -9,20 +9,24 @@ const AccountListingsPage = ({setCurrentPage, setParkingDetails}) => {
 
     useEffect(() => {
         fetch(`${api_address}/listings`)
-            .catch(err => console.error("failed looading listings"))
-            .then(result => {
-                if (!result.ok) {
-                    console.error("error loading reservations");
+            .catch(()=>
+                {
+                    setListings([]);
+                    return;
+                })
+            .then((response) => {
+                if (!response?.ok) {
+                    console.log("failed loading reservations");
                     return null;
                 }
 
-                return result.json();
+                return response.json();
             })
             .then(data => {
                 if (data) {
                     setListings(data);
                 }
-            })
+            });
     }, [])
 
 

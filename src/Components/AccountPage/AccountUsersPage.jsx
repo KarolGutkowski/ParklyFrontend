@@ -12,8 +12,8 @@ const AccountUsersPage = ({setUserDetails, setCurrentPage}) => {
             "firstName": "Karol",
             "lastName": "Wojtyła",
             "email": "superEmail@gmail.com",
-            "dateOfBirth": "01.01.2005"
-
+            "dateOfBirth": "01.01.2005",
+            
         }]);
     const columns = [
         "Username", "First name", "Last name", "Email", "Date of birth"
