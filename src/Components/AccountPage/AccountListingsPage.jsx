@@ -3,10 +3,11 @@ import ListingsTable from "./ListingsTable";
 import {useEffect, useState} from "react";
 import {AccountSearchBar} from "./AccountSearchBar";
 import { api_address } from "../../api_addres";
-
+import { useCurrentListingsStore } from "../../zustand/listings_store";
 
 const AccountListingsPage = ({setParkingDetails}) => {
-    const [listings, setListings] = useState(null);
+
+    const setListings = useCurrentListingsStore((state)=>(state.setListings))
 
 
     useEffect(() => {
@@ -32,6 +33,7 @@ const AccountListingsPage = ({setParkingDetails}) => {
     }, [])
 
 
+
     return (
         <Box>
             <Box mb='20px'>
@@ -40,8 +42,7 @@ const AccountListingsPage = ({setParkingDetails}) => {
             </Box>
             <Box display="flex" flexDir="column" width="80%" margin="auto">
                 <AccountSearchBar/>
-                <ListingsTable setParkingDetails={setParkingDetails}
-                               listings={listings}/>
+                <ListingsTable setParkingDetails={setParkingDetails}/>
             </Box>
         </Box>);
 };

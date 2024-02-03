@@ -40,7 +40,7 @@ const AccountSidebar = (props) => {
     {
         navigate("/");
     }
-    console.log(currentUser);
+    
     return (
         <>
             <Box position="absolute" display="flex" alignItems='center'>

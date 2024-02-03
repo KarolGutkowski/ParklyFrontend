@@ -26,7 +26,6 @@ export const fetchReservations = (reservationsSetter) =>{
 
 
 export const fetchReservationsForId = (reservationsSetter, id) =>{
-    console.log(id);
     fetch(`${api_address}/reservations`)
     .catch(error => {
         console.log("failed loading reservations:", error);

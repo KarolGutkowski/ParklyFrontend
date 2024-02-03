@@ -1,10 +1,18 @@
 import {Image, Link, Skeleton, Stack, Table, TableContainer, Tbody, Td, Th, Thead, Tr} from "@chakra-ui/react";
 import {LISTING_VIEW} from "./account_page_consts";
 import { useCurrentViewStore } from '../../zustand/current_view_store';
+import { useCurrentListingsStore } from "../../zustand/listings_store"
 
-const ListingsTable = ({setParkingDetails, listings}) => {
+const ListingsTable = () => {
 
     const setCurrentView = useCurrentViewStore((state)=>state.changeView);
+    const {listings, setCurrentlyViewedListing} = useCurrentListingsStore((state)=>
+    {
+        return ({
+            listings: state.listings, 
+            setCurrentlyViewedListing: state.setCurrentlyViewedListing
+        })
+    })
 
     return (
         <>
@@ -22,7 +30,7 @@ const ListingsTable = ({setParkingDetails, listings}) => {
                     </Thead>
                     <Tbody>
                         {listings ? listings.map(item => {
-                            return mapToTableRow(item, setCurrentView, setParkingDetails);
+                            return mapToTableRow(item, setCurrentView, setCurrentlyViewedListing);
                         }) : null}
                     </Tbody>
                 </Table>
@@ -39,12 +47,12 @@ const ListingsTable = ({setParkingDetails, listings}) => {
     );
 }
 
-function mapToTableRow(item, setCurrentPage, setParkingDetails) {
-    return (<Tr bgColor='#c8e3fa'>
+function mapToTableRow(item, setCurrentPage, setCurrentListing) {
+    return (<Tr bgColor='#c8e3fa' key={item.id}>
         <Td borderLeftRadius='10px' fontSize='1.25rem'>
             <Link color="blue" onClick={() => {
-                setCurrentPage(LISTING_VIEW + item.id)
-                setParkingDetails(item)
+                setCurrentPage(LISTING_VIEW)
+                setCurrentListing(item.id)
             }}>
                 {item.id}
             </Link>

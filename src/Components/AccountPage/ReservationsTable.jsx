@@ -7,7 +7,7 @@ export const ReservationsTable = (props) => {
     const columns = [];
 
     columnsNamesList.forEach(name => {
-        columns.push(<Th fontSize='1rem'>{name}</Th>);
+        columns.push(<Th fontSize='1rem' id={name}>{name}</Th>);
     });
 
     return (
@@ -39,7 +39,7 @@ export const ReservationsTable = (props) => {
 }
 
 function mapToTableRow(item) {
-    return (<Tr bgColor='#c8e3fa'>
+    return (<Tr bgColor='#c8e3fa' key={item.id}>
         <Td paddingY='2rem' fontSize='1.25rem'>
             <Link>{item.id}</Link>
         </Td>

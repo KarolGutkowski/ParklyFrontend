@@ -40,7 +40,7 @@ export const UsersTable = ({columnsNamesList, rowData, setUserDetails}) => {
 }
 
 function mapToTableRow(item, setCurrentPage, setUserDetails) {
-    return (<Tr bgColor='#c8e3fa'>
+    return (<Tr bgColor='#c8e3fa' key={item.id}>
         <Td paddingY='2rem' fontSize='1.25rem'>
             <Link color="blue" onClick={() => {
                 setCurrentPage(USER_VIEW + item.id)

@@ -29,8 +29,7 @@ const Account = () => {
             default:
                 if(currentView.startsWith(LISTING_VIEW))
                 {
-                    const id = currentView.replace(LISTING_VIEW, "");
-                    return <ListingView setCurrentPage={currentView} id={id} parkingDetails={parkingDetails}/>
+                    return <ListingView />
                 }
                 if(currentView.startsWith(USER_VIEW))
                 {

@@ -1,4 +1,4 @@
-import {Box, Button, Card, CardBody, CardFooter, CardHeader, Heading, Image, Text, Input} from "@chakra-ui/react";
+import {Box, Button, Card, CardBody, CardFooter, CardHeader, Heading, Image, Text, Input, list} from "@chakra-ui/react";
 import parking_spot_example from "../../img/parking_spot_example.png"
 import {LISTINGS_PAGE, reservations_columns} from "./account_page_consts";
 import {ReservationsTable} from "./ReservationsTable";
@@ -7,13 +7,22 @@ import { RemoveListing } from "./ConfirmRemoveListingAlert";
 import { SaveListingChanges } from "./SaveListingsChanges";
 import { fetchReservationsForId } from "./fetchReservations";
 import { useCurrentViewStore } from "../../zustand/current_view_store";
+import { useCurrentListingsStore } from "../../zustand/listings_store";
 
 const VIEW_MODE = "VIEW_MODE"
 const EDIT_MODE = "EDIT_MODE"
 
-export const ListingView = (props) => {
-    const {id} = props;
-    const {parkingDetails} = props;
+export const ListingView = () => {
+
+    const {currentListing, currentId} = useCurrentListingsStore((state)=>
+    {
+        const current = state.listings.find(listing=>listing.id === state.currentlyViewedListing);
+
+        return ({
+            currentListing: current,
+            currentId: state.currentlyViewedListing
+        })
+    })
 
     const setCurrentView = useCurrentViewStore((state)=>state.changeView);
 
@@ -22,8 +31,9 @@ export const ListingView = (props) => {
 
     useEffect(()=>
     {
-        fetchReservationsForId(setReserevationsForListing, id);
-    },[id])
+        fetchReservationsForId(setReserevationsForListing, currentId);
+    },[currentId, currentListing])
+
 
     return (
         <Box>
@@ -36,29 +46,29 @@ export const ListingView = (props) => {
                     <CardHeader textAlign="center">
                         <Button ml='1rem' left='0' position='absolute' colorScheme='blue'
                                 onClick={() => setCurrentView(LISTINGS_PAGE)}>Back</Button>
-                        <Heading margin='auto' fontSize='1.875rem' size='md'> Listing {id} details</Heading>
+                        <Heading margin='auto' fontSize='1.875rem' size='md'> Listing {currentId} details</Heading>
                     </CardHeader>
                     <CardBody display='flex'>
                         <Box mr='1rem' width='50%'>
-                            <Image src={parkingDetails.image.src} alt={parkingDetails.image.alt} height="256px" width="521px"/>
+                            <Image src={currentListing.image.src} alt={currentListing.image.alt} height="256px" width="521px"/>
                         </Box >
                         {listingDisplayMode===VIEW_MODE?
                             <Box width="70%">
-                                <Text fontSize='1.5rem'>Country: {parkingDetails.country}</Text>
-                                <Text fontSize='1.5rem'>City: {parkingDetails.city}</Text>
-                                <Text fontSize='1.5rem'>Street: {parkingDetails.street}</Text>
-                                <Text fontSize='1.5rem'>Number: {parkingDetails.number}</Text>
+                                <Text fontSize='1.5rem'>Country: {currentListing.country}</Text>
+                                <Text fontSize='1.5rem'>City: {currentListing.city}</Text>
+                                <Text fontSize='1.5rem'>Street: {currentListing.street}</Text>
+                                <Text fontSize='1.5rem'>Number: {currentListing.number}</Text>
                             </Box>
                         :
                             <Box width="70%">
                                 Country: 
-                                <Input fontSize='1.5rem' defaultValue={parkingDetails.country} />
+                                <Input fontSize='1.5rem' defaultValue={currentListing.country} />
                                 City:
-                                <Input fontSize='1.5rem' defaultValue={parkingDetails.city} />
+                                <Input fontSize='1.5rem' defaultValue={currentListing.city} />
                                 Street:
-                                <Input fontSize='1.5rem' defaultValue={parkingDetails.street}/>
+                                <Input fontSize='1.5rem' defaultValue={currentListing.street}/>
                                 Number:
-                                <Input fontSize='1.5rem' defaultValue={parkingDetails.number}/>
+                                <Input fontSize='1.5rem' defaultValue={currentListing.number}/>
                             </Box>
                         }
                     </CardBody>
@@ -68,7 +78,7 @@ export const ListingView = (props) => {
                                 <Button colorScheme='teal' onClick={()=>setlistingDisplayMode(EDIT_MODE)}>Edit</Button>:
                                 <>
                                     <Button colorScheme='blue' onClick={()=>setlistingDisplayMode(VIEW_MODE)}>Cancel</Button>
-                                    <SaveListingChanges listingId={id} modifiedValues={parkingDetails}/>
+                                    <SaveListingChanges listingId={currentId} modifiedValues={currentListing}/>
                                 </>
                             }
                                 <RemoveListing />

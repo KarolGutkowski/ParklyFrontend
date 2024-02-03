@@ -18,7 +18,7 @@ export const HomeIcon = (props) => (
             stroke="white" stroke-width="2" fill='none'/>
         <path
             d="M30.2084 43.75V32.25C30.2084 31.6977 29.7606 31.25 29.2084 31.25H20.7917C20.2394 31.25 19.7917 31.6977 19.7917 32.25V43.75"
-            stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" fill='none'/>
+            stroke="white" stroke-linecap="round" strokeLinejoin="round" stroke-width="2" fill='none'/>
     </Icon>)
 
 export const ReservationsIcon = (props) => (
