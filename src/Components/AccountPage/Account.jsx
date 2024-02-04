@@ -1,14 +1,15 @@
 import { Box, List } from "@chakra-ui/react"
 import AccountSidebar from "./AccountSidebar"
 import { useState } from "react"
-import {HOME_PAGE, LISTINGS_PAGE, RESERVATIONS_PAGE, USERS_PAGE, LISTING_VIEW, USER_VIEW} from "./account_page_consts"
+import {HOME_PAGE, LISTINGS_PAGE, RESERVATIONS_PAGE, USERS_PAGE, LISTING_VIEW, USER_VIEW, RESERVATION_VIEW} from "./account_page_consts"
 import AccountHomePage from "./AccountHomePage"
-import AccountListingsPage from "./AccountListingsPage"
-import AccountReservationsPage from "./AccountReservationsPage"
-import AccountUsersPage from "./AccountUsersPage"
-import { ListingView } from "./ListingView"
-import {UserView} from "./UserView";
+import AccountListingsPage from "./Listings/AccountListingsPage"
+import AccountReservationsPage from "./Reservations/AccountReservationsPage"
+import AccountUsersPage from "./Users/AccountUsersPage"
+import { ListingView } from "./Listings/ListingView"
+import {UserView} from "./Users/UserView";
 import { useCurrentViewStore } from "../../zustand/current_view_store"
+import { ReservationView } from "./Reservations/ReservationView"
 
 
 const Account = () => {
@@ -24,6 +25,8 @@ const Account = () => {
                 return <AccountListingsPage setParkingDetails={setParkingDetails}/>
             case RESERVATIONS_PAGE:
                 return <AccountReservationsPage />
+            case RESERVATION_VIEW:
+                return <ReservationView />
             case USERS_PAGE:
                 return <AccountUsersPage setUserDetails={setUserDetails} />
             default:

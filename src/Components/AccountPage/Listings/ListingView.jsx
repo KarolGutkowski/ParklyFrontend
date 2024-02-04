@@ -1,13 +1,12 @@
 import {Box, Button, Card, CardBody, CardFooter, CardHeader, Heading, Image, Text, Input, list} from "@chakra-ui/react";
-import parking_spot_example from "../../img/parking_spot_example.png"
-import {LISTINGS_PAGE, reservations_columns} from "./account_page_consts";
-import {ReservationsTable} from "./ReservationsTable";
+import {LISTINGS_PAGE, reservations_columns} from "../account_page_consts";
+import {ReservationsForEntity} from "../ReservationsForEntity"
 import { useState, useEffect } from "react";
 import { RemoveListing } from "./ConfirmRemoveListingAlert";
-import { SaveListingChanges } from "./SaveListingsChanges";
-import { fetchReservationsForId } from "./fetchReservations";
-import { useCurrentViewStore } from "../../zustand/current_view_store";
-import { useCurrentListingsStore } from "../../zustand/listings_store";
+import { SaveListingChanges } from "../SaveListingsChanges";
+import { fetchReservationsForId } from "../Reservations/fetchReservations";
+import { useCurrentViewStore } from "../../../zustand/current_view_store";
+import { useCurrentListingsStore } from "../../../zustand/listings_store";
 import {useForm} from "react-hook-form"
 
 const VIEW_MODE = "VIEW_MODE"
@@ -22,7 +21,6 @@ export const ListingView = () => {
             updateListing: state.updateListing
         }   
     })
-
 
     const setCurrentView = useCurrentViewStore((state)=>state.changeView);
 
@@ -122,7 +120,7 @@ export const ListingView = () => {
                             </Box>
                         </CardFooter>
                     </Card>
-                    <ReservationsTable columnsNamesList={reservations_columns} rowData={reservationsForListing}/>
+                    <ReservationsForEntity columnsNamesList={reservations_columns} rowData={reservationsForListing}/>
                 </Box>
             </Box>
         </>:

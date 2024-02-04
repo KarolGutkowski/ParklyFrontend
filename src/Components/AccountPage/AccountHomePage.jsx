@@ -4,9 +4,9 @@ import {ListingIcon, ReservationsIcon, UsersIcon} from "./AccountPageIcons";
 import { useCurrentViewStore } from '../../zustand/current_view_store';
 import { useEffect, useState } from 'react';
 import { api_address } from '../../api_addres';
-import { fetchListingsCount } from "./fetchListings";
-import { fetchReservationsCount } from './fetchReservations';
-import { fetchUsersCount } from './fetchUsers';
+import { fetchListingsCount } from "./Listings/fetchListings";
+import { fetchReservationsCount } from './Reservations/fetchReservations';
+import { fetchUsersCount } from './Users/fetchUsers';
 
 
 const cardWith = "40%";

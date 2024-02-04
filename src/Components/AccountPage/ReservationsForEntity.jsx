@@ -1,9 +1,22 @@
 import {Link, Skeleton, Stack, Table, TableContainer, Tbody, Td, Th, Thead, Tr} from "@chakra-ui/react";
+import { useCurrentViewStore } from '../../zustand/current_view_store';
+import { useCurrentReservationsStore } from "../../zustand/reservations_store";
+import { RESERVATION_VIEW } from "./account_page_consts";
 
-
-export const ReservationsTable = (props) => {
+export const ReservationsForEntity = (props) => {
     const {columnsNamesList} = props;
+
+    const setCurrentView = useCurrentViewStore((state)=>state.changeView);
     const {rowData} = props;
+
+    const { fetchToCurrentReservation} = useCurrentReservationsStore((state)=>
+    {
+        return (
+        {
+            fetchToCurrentReservation: state.fetchToCurrentReservation
+        });
+    })
+
     const columns = [];
 
     columnsNamesList.forEach(name => {
@@ -21,7 +34,7 @@ export const ReservationsTable = (props) => {
                     </Thead>
                     <Tbody>
                         {rowData ? rowData.map(item => {
-                            return mapToTableRow(item);
+                            return mapToTableRow(item, fetchToCurrentReservation, setCurrentView);
                         }) : null}
                     </Tbody>
                 </Table>
@@ -38,10 +51,17 @@ export const ReservationsTable = (props) => {
     );
 }
 
-function mapToTableRow(item) {
+function mapToTableRow(item, fetchToCurrentReservation, setCurrentView) {
     return (<Tr bgColor='#c8e3fa' key={item.id}>
         <Td paddingY='2rem' fontSize='1.25rem'>
-            <Link>{item.id}</Link>
+            <Link
+                onClick={async ()=>
+                    {
+                        await fetchToCurrentReservation(item.id);
+                        setCurrentView(RESERVATION_VIEW);
+                        console.log(RESERVATION_VIEW)
+                    }}
+            >{item.id}</Link>
         </Td>
         <Td paddingY='2rem' fontSize='1.25rem'>{item.startDate}</Td>
         <Td paddingY='2rem' fontSize='1.25rem'>{item.endDate}</Td>

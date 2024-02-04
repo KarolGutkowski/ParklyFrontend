@@ -1,7 +1,7 @@
 import {Image, Link, Skeleton, Stack, Table, TableContainer, Tbody, Td, Th, Thead, Tr} from "@chakra-ui/react";
-import {LISTING_VIEW} from "./account_page_consts";
-import { useCurrentViewStore } from '../../zustand/current_view_store';
-import { useCurrentListingsStore } from "../../zustand/listings_store"
+import {LISTING_VIEW} from "../account_page_consts";
+import { useCurrentViewStore } from "../../../zustand/current_view_store"
+import { useCurrentListingsStore } from "../../../zustand/listings_store"
 
 const ListingsTable = () => {
 

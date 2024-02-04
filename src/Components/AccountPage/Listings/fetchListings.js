@@ -1,4 +1,4 @@
-import { api_address } from "../../api_addres";
+import { api_address } from "../../../api_addres";
 
 export const fetchListings = async () =>
 {
@@ -20,7 +20,6 @@ export const fetchListings = async () =>
 
 export const fetchListingByIdAsync = async (id) =>
 {
-    console.log("fetching single element");
     try{
         const result = await fetch(`${api_address}/listings/${id}`);
         if (!result?.ok)
@@ -28,7 +27,6 @@ export const fetchListingByIdAsync = async (id) =>
             throw new Error("Error loading listings");
         }
         const data = await result.json();
-        console.log(data);
         return data;
     }
     catch(err)

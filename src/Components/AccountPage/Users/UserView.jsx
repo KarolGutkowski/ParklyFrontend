@@ -1,11 +1,10 @@
 import {Box, Button, Card, CardBody, CardFooter, CardHeader, Center, Heading, Image, Text} from "@chakra-ui/react";
-import parking_spot_example from "../../img/parking_spot_example.png"
-import {USERS_PAGE} from "./account_page_consts";
-import {ReservationsTable} from "./ReservationsTable";
+import {USERS_PAGE} from "../account_page_consts";
+import {ReservationsTable} from "../Reservations/ReservationsTable";
 import {useState} from "react";
 import {UserEdition} from "./UserEdition";
-import user_img from "../../img/example_profile_pict.jpg";
-import { useCurrentViewStore } from "../../zustand/current_view_store";
+import user_img from "../../../img/example_profile_pict.jpg"
+import { useCurrentViewStore } from "../../../zustand/current_view_store";
 
 export const UserView = ({id, userDetails}) => {
     const [isEditingMode, setIsEditingMode] = useState(false)

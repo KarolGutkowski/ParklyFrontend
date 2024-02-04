@@ -1,8 +1,8 @@
 import {Box, Text} from "@chakra-ui/react";
-import ListingsTable from "./ListingsTable";
+import ListingsTable from "./ListingsTable"
 import {useEffect, useState} from "react";
-import {AccountSearchBar} from "./AccountSearchBar";
-import { useCurrentListingsStore } from "../../zustand/listings_store";
+import {AccountSearchBar} from "../AccountSearchBar";
+import { useCurrentListingsStore } from "../../../zustand/listings_store";
 
 const AccountListingsPage = ({setParkingDetails}) => {
 

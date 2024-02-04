@@ -2,8 +2,7 @@ import {useEffect, useState} from "react";
 import {Box, Text} from "@chakra-ui/react";
 import {UsersTable} from "./UsersTable";
 import {UsersSearchBar} from "./UsersSearchBar";
-import { api_address } from "../../api_addres";
-import user_img from "../../img/example_profile_pict.jpg";
+import user_img from "../../../img/example_profile_pict.jpg";
 
 const AccountUsersPage = ({setUserDetails}) => {
     const [users, setUsers] = useState([

@@ -1,6 +1,6 @@
 import {create }from "zustand"
 import { api_address } from "../api_addres"
-import { fetchListings, fetchListingByIdAsync } from "../Components/AccountPage/fetchListings";
+import { fetchListings, fetchListingByIdAsync } from "../Components/AccountPage/Listings/fetchListings";
 
 export const useCurrentListingsStore = create((set) => ({ 
   listings: [], // Array to store all listings
@@ -16,7 +16,6 @@ export const useCurrentListingsStore = create((set) => ({
   fetchListingById: async (id) => {
     const currentListing = await fetchListingByIdAsync(id); // Call your API function to fetch a listing by ID
     set({ currentListing }); // Update the current listing in the store
-    console.log(currentListing);
   },
 
   // Action to update a listing

@@ -1,7 +1,7 @@
 import {Box, IconButton, Input, useDisclosure} from "@chakra-ui/react";
 import {FilterIcon} from "./AccountPageIcons";
 import {SearchIcon} from "@chakra-ui/icons";
-import {ListingsFilters} from "./ListingsFilters";
+import {ListingsFilters} from "./Listings/ListingsFilters";
 
 export const AccountSearchBar = () => {
     const {isOpen, onToggle} = useDisclosure()

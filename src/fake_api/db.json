@@ -1,7 +1,7 @@
 {
   "reservations": [
     {
-      "id": 13,
+      "id": "13",
       "startDate": "17-01-2023",
       "endDate": "31-02-2023",
       "user": "karol1234",
@@ -13,10 +13,10 @@
   "listings": [
     {
       "id": "13",
-      "country": "Poland",
+      "country": "Germany",
       "city": "Warszawa",
       "street": "Koszykowa",
-      "number": "12",
+      "number": "12a",
       "image": {
         "src": "./static/media/parking_spot_example.b1a03108a34703a3d9e7.png",
         "alt": "example parking spot"
