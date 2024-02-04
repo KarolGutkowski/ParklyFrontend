@@ -91,3 +91,17 @@ export const fetchListingsSync = () =>
             }
         })
 }
+
+export async function fetchReservationsCount() {
+    try {
+        const response = await fetch(`${api_address}/reservations`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch reservations');
+        }
+        const data = await response.json();
+        return data.length;
+    } catch (error) {
+        console.error('Error fetching reservations:', error);
+        return 0;
+    }
+}

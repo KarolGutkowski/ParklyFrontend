@@ -16,7 +16,7 @@
       "country": "Poland",
       "city": "Warszawa",
       "street": "Koszykowa",
-      "number": "12Adwa",
+      "number": "12",
       "image": {
         "src": "./static/media/parking_spot_example.b1a03108a34703a3d9e7.png",
         "alt": "example parking spot"
@@ -33,19 +33,5 @@
         "alt": "example parking spot"
       }
     }
-  ],
-  "countries": [
-    "Poland",
-    "Germany",
-    "United Kingdom",
-    "Italy"
-  ],
-  "cities": [
-    "Warasaw",
-    "Berlin",
-    "London",
-    "Rome",
-    "Wroclaw",
-    "Birmingham"
   ]
 }

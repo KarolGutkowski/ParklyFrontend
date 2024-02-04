@@ -2,11 +2,31 @@ import {Box, Card, CardBody, CardFooter, CardHeader, Heading, Text} from '@chakr
 import {LISTINGS_PAGE, RESERVATIONS_PAGE, USERS_PAGE} from './account_page_consts';
 import {ListingIcon, ReservationsIcon, UsersIcon} from "./AccountPageIcons";
 import { useCurrentViewStore } from '../../zustand/current_view_store';
+import { useEffect, useState } from 'react';
+import { api_address } from '../../api_addres';
+import { fetchListingsCount } from "./fetchListings";
+import { fetchReservationsCount } from './fetchReservations';
+import { fetchUsersCount } from './fetchUsers';
+
 
 const cardWith = "40%";
 const AccountHomePage = (props) => {
 
     const setCurrentView = useCurrentViewStore((state)=>state.changeView);
+    const currentView = useCurrentViewStore((state)=> state.currentView);
+    const [statistics, setStatistics] = useState([]);
+
+    useEffect(()=>
+    {
+        getStatistics()
+            .then(statistics => {
+                setStatistics(statistics);
+            })
+            .catch(error => {
+                console.error('Error fetching statistics:', error);
+            });
+
+    }, [currentView])
 
     return (
         <Box>
@@ -24,7 +44,7 @@ const AccountHomePage = (props) => {
                         <UsersIcon fontSize="7rem"/>
                     </CardHeader>
                     <CardBody>
-                        <Text>100 000</Text>
+                        <Text>{statistics[0]}</Text>
                     </CardBody>
                     <CardFooter alignSelf="center">
                         <Heading fontSize='2rem' size='md'> Users</Heading>
@@ -38,7 +58,7 @@ const AccountHomePage = (props) => {
                         <ListingIcon fontSize="7rem"/>
                     </CardHeader>
                     <CardBody>
-                        <Text>4 234</Text>
+                        <Text>{statistics[1]}</Text>
                     </CardBody>
                     <CardFooter alignSelf="center">
                         <Heading fontSize='2rem' size='md' onC>Listings</Heading>
@@ -52,7 +72,7 @@ const AccountHomePage = (props) => {
                         <ReservationsIcon fontSize="7rem"/>
                     </CardHeader>
                     <CardBody>
-                        <Text>14 003</Text>
+                        <Text>{statistics[2]}</Text>
                     </CardBody>
                     <CardFooter alignSelf="center">
                         <Heading fontSize='2rem' size='md'>Reservations</Heading>
@@ -64,3 +84,12 @@ const AccountHomePage = (props) => {
 }
 
 export default AccountHomePage;
+
+
+function getStatistics() {
+    const usersPromise = fetchUsersCount();
+    const listingsPromise = fetchListingsCount();
+    const reservationsPromise = fetchReservationsCount();
+
+    return Promise.all([usersPromise, listingsPromise, reservationsPromise]);
+}

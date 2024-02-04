@@ -36,3 +36,19 @@ export const fetchListingByIdAsync = async (id) =>
         console.log("failed loading listings:", err);
     }
 }
+
+export const fetchListingsCount = async () =>
+{
+    try {
+        const response = await fetch(`${api_address}/listings`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch listings');
+        }
+        const data = await response.json();
+        return data.length;
+    } catch (error) {
+        console.error('Error fetching listings:', error);
+        return 0;
+    }
+        
+}
