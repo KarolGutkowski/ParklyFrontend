@@ -2,36 +2,15 @@ import {Box, Text} from "@chakra-ui/react";
 import ListingsTable from "./ListingsTable";
 import {useEffect, useState} from "react";
 import {AccountSearchBar} from "./AccountSearchBar";
-import { api_address } from "../../api_addres";
 import { useCurrentListingsStore } from "../../zustand/listings_store";
 
 const AccountListingsPage = ({setParkingDetails}) => {
 
-    const setListings = useCurrentListingsStore((state)=>(state.setListings))
-
+    const fetchListings = useCurrentListingsStore((state)=>(state.fetchAllListings))
 
     useEffect(() => {
-        fetch(`${api_address}/listings`)
-            .catch(()=>
-                {
-                    setListings([]);
-                    return;
-                })
-            .then((response) => {
-                if (!response?.ok) {
-                    console.log("failed loading reservations");
-                    return null;
-                }
-
-                return response.json();
-            })
-            .then(data => {
-                if (data) {
-                    setListings(data);
-                }
-            });
+        fetchListings();
     }, [])
-
 
 
     return (

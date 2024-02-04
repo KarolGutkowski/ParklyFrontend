@@ -13,7 +13,7 @@ import {
     Text,
     useDisclosure
 } from '@chakra-ui/react'
-import {useRef} from 'react'
+import {useRef, useEffect} from 'react'
 import {HomeIcon, ListingIcon, ReservationsIcon, UsersIcon} from './AccountPageIcons'
 import {HamburgerIcon, UnlockIcon} from '@chakra-ui/icons'
 import {NavLink} from 'react-router-dom'
@@ -36,12 +36,19 @@ const AccountSidebar = (props) => {
         })
     })
 
-    if(currentUser == null)
+
+    useEffect(()=>
     {
-        navigate("/");
-    }
+        if(currentUser === null || currentUser.username === null)
+        {
+            navigate("/");
+        }
+    }, [currentUser])
     
     return (
+         
+        <>
+        {currentUser?
         <>
             <Box position="absolute" display="flex" alignItems='center'>
                 <Image onClick={() => setCurrentView(HOME_PAGE)} cursor='pointer' src={logo} alt="parkly logo"
@@ -92,6 +99,9 @@ const AccountSidebar = (props) => {
                     </DrawerFooter>
                 </DrawerContent>
             </Drawer>
+            </>:
+            navigate("/")
+        }
         </>
     )
 }

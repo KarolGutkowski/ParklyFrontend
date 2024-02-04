@@ -6,11 +6,11 @@ import { useCurrentListingsStore } from "../../zustand/listings_store"
 const ListingsTable = () => {
 
     const setCurrentView = useCurrentViewStore((state)=>state.changeView);
-    const {listings, setCurrentlyViewedListing} = useCurrentListingsStore((state)=>
+    const {listings, fetchListingById} = useCurrentListingsStore((state)=>
     {
         return ({
-            listings: state.listings, 
-            setCurrentlyViewedListing: state.setCurrentlyViewedListing
+            listings: state.listings,
+            fetchListingById: state.fetchListingById
         })
     })
 
@@ -30,7 +30,7 @@ const ListingsTable = () => {
                     </Thead>
                     <Tbody>
                         {listings ? listings.map(item => {
-                            return mapToTableRow(item, setCurrentView, setCurrentlyViewedListing);
+                            return mapToTableRow(item, setCurrentView, fetchListingById);
                         }) : null}
                     </Tbody>
                 </Table>
@@ -47,12 +47,12 @@ const ListingsTable = () => {
     );
 }
 
-function mapToTableRow(item, setCurrentPage, setCurrentListing) {
+function mapToTableRow(item, setCurrentPage, fetchListingById) {
     return (<Tr bgColor='#c8e3fa' key={item.id}>
         <Td borderLeftRadius='10px' fontSize='1.25rem'>
-            <Link color="blue" onClick={() => {
-                setCurrentPage(LISTING_VIEW)
-                setCurrentListing(item.id)
+            <Link color="blue" onClick={async () => {
+                await fetchListingById(item.id);
+                setCurrentPage(LISTING_VIEW);
             }}>
                 {item.id}
             </Link>

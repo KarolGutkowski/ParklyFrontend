@@ -31,7 +31,7 @@ export const SaveListingChanges = ()=> {
                 <Button ref={cancelRef} onClick={onClose}>
                   Cancel
                 </Button>
-                <Button colorScheme='green' onClick={onClose} ml={3}>
+                <Button colorScheme='green' onClick={onClose} ml={3} form="edit-listing-form" type="submit">
                   Save
                 </Button>
               </AlertDialogFooter>
