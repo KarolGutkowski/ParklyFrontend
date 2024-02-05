@@ -75,8 +75,6 @@ const AccountSidebar = (props) => {
                     <DrawerCloseButton color='white'/>
 
                     <DrawerHeader alignItems="center" textAlign="center">
-                        <Image borderRadius='full' boxSize='150px' src='https://bit.ly/dan-abramov' alt='Dan Abramov'
-                               marginTop="10px"/>
                         <Text color='white' fontSize='md'>{currentUser.email}</Text>
                         <Text fontSize='md' color="#C64F4F">Admin</Text>
                     </DrawerHeader>
