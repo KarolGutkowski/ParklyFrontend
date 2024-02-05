@@ -129,3 +129,38 @@ export const cancelReservation = async (reservation) =>
         return 0;
     }
 }
+
+export const fetchReservationsForUser = async (userId, pageSize, pageNumber) =>
+{
+    try{
+        const user = getLoggedInUser();
+
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${user.token}`);
+        debugger;
+        var requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+          };
+
+        const result = await fetch(`${api_address}/admin/reservation?` 
+            + new URLSearchParams(
+                {
+                    page: pageNumber,
+                    size: pageSize,
+                    userId: userId
+                }), requestOptions);
+
+        if (!result?.ok)
+        {
+            throw new Error("Error loading reservations");
+        }
+
+        const data = await result.json();
+        return data;
+    }
+    catch(err)
+    {
+        console.log("failed loading reservations:", err);
+    }
+}

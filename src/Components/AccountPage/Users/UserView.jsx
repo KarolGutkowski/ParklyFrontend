@@ -2,11 +2,11 @@ import {Box, Button, Card, CardBody, CardFooter, CardHeader, Heading, Image, Tex
 import {USERS_PAGE} from "../account_page_consts";
 import {ReservationsTable} from "../Reservations/ReservationsTable";
 import {useState} from "react";
-import user_img from "../../../img/example_profile_pict.jpg"
 import { useCurrentViewStore } from "../../../zustand/current_view_store";
 import { useCurrentUsersStore } from "../../../zustand/users_store";
 import {useForm} from "react-hook-form"
 import {SaveUserChanges} from "./SaveUserChanges"
+import { UsersReservationTable } from "./UsersReservationTable";
 
 export const UserView = () => {
     const [isEditingMode, setIsEditingMode] = useState(false)
@@ -34,28 +34,17 @@ export const UserView = () => {
                                 onClick={() => setCurrentView(USERS_PAGE)}>Back</Button>
                         <Heading margin='auto' fontSize='1.875rem' size='md'> User {user.id} details</Heading>
                     </CardHeader>
-                    <CardBody display='flex'>
-                        <Box mr='1rem' width='30%' justifyContent="center">
-                            <Image src={user_img} alt="parking spot" height="200px" width="auto" margin="auto"/>
-                        </Box>
-
-        
+                    <CardBody display='flex' justifyContent="center">
                         {!isEditingMode?
-                        <Box width="70%">
+                        <Box display='flex' justifyContent="center" flexDir="column">
                             <Text fontSize='1.5rem'>First name: {user.firstName}</Text>
                             <Text fontSize='1.5rem'>Last name: {user.lastName}</Text>
                             <Text fontSize='1.5rem'>Email: {user.email}</Text>
                             <Text fontSize='1.5rem'>Date of birth: {user.birthDate}</Text>
-                        </Box>
+                        </Box >
                         :
-                            <Box width="70%">
-                                <form id="edit-user-form" onSubmit={handleSubmit(editUser)} >
-                                    
-                                        Username: 
-                                            <Input fontSize='1.5rem' defaultValue={user.username} {   
-                                                ...register('username',
-                                                {required: 'This field is required'}
-                                            )}/>
+                            <Box >
+                                <form id="edit-user-form" onSubmit={handleSubmit(editUser)} flexDir="column" display='flex' justifyContent="center" >
                                             First name:
                                             <Input fontSize='1.5rem' defaultValue={user.firstName} {   
                                                 ...register('firstName',
@@ -82,22 +71,22 @@ export const UserView = () => {
                     </CardBody>
                     <CardFooter display="flex" justifyContent="center">
                         <Box width='100%' display='flex' justifyContent='center' gap="10px">
-                            {isEditingMode?
+                            {/* {isEditingMode?
                                 <>
                                     <Button onClick={() => setIsEditingMode(!isEditingMode)} colorScheme='blue'>Cancel</Button>
                                     <SaveUserChanges/>
                                 </>:
                                 <Button colorScheme='teal' onClick={()=>setIsEditingMode(!isEditingMode)}>Edit</Button>
-                            }      
-                            <Button variant='solid' colorScheme='blackAlpha' bg="#C64F4F" color="white">Remove</Button>
+                            }       */}
+                            {/* <Button variant='solid' colorScheme='blackAlpha' bg="#C64F4F" color="white">Remove</Button> */}
                         </Box>
                     </CardFooter>
                 </Card>
                 <Box  display="flex" flexDir="column" width="100%" margin="2rem auto 0 auto">
                     <Text width="100%" fontSize="2.5rem" fontWeight="bold" textAlign="center">Reservations</Text>
-                    <ReservationsTable columnsNamesList={[
+                    <UsersReservationTable columnsNamesList={[
                         "Id", "Start Date", "End Date", "User", "Type", "Item id", "Info"
-                    ]} rowData={null}/>
+                    ]} userId={user.userId}/>
                 </Box>
             </Box>
             
