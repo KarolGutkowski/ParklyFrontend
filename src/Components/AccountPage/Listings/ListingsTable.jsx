@@ -13,7 +13,7 @@ const ListingsTable = () => {
             fetchListingById: state.fetchListingById
         })
     })
-    console.log(listings);
+    
     return (
         <>
             <TableContainer marginTop="10px">

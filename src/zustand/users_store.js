@@ -5,11 +5,13 @@ export const useCurrentUsersStore = create((set)=>(
 {
     users: [],
     currentlyViewedUser: null,
+    pages: 0,
 
-    fetchUsers: async () =>
+    fetchUsers: async (pageNumber, pageSize) =>
     {
-        const users = await fetchAllUsers();
-        set({users});
+        const response = await fetchAllUsers(pageNumber, pageSize);
+        set({pages: response.totalPages})
+        set({users: response.content });
     },
 
     fetchToCurrentlyViewedUser: async (id)=> 

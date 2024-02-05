@@ -46,22 +46,23 @@ export const ReservationView = () =>
                                 <Box width="100%" display='flex' flexDir="column" justifyContent="center">
                                     <Text fontSize='1.5rem' margin="auto">Start Date: {currentReservation.startDate}</Text>
                                     <Text fontSize='1.5rem' margin="auto">End Date: {currentReservation.endDate}</Text>
-                                    <Text fontSize='1.5rem' margin="auto">User: {currentReservation.user}</Text>
+                                    <Text fontSize='1.5rem' margin="auto">User: {currentReservation.userId}</Text>
                                     <Text fontSize='1.5rem' margin="auto">
                                             Car park:&nbsp;
                                             <Link color="blue" onClick={async ()=>
                                             {
-                                                await fetchListingById(currentReservation.itemId);
+                                                await fetchListingById(currentReservation.carParkId);
                                                 setCurrentView(LISTING_VIEW);
-                                            }}>{currentReservation.itemId}
+                                            }}>{currentReservation.carParkId}
                                         </Link>
                                     </Text>
+                                    <Text fontSize='1.5rem' margin="auto">Status: {currentReservation.reservationStatus}</Text>
                                 </Box>
                             
                         </CardBody>
                         <CardFooter display="flex" justifyContent="center">
                             <Box width='100%' display='flex' justifyContent='center'>
-                                    <CancelReservation />
+                                    <CancelReservation reservation={currentReservation} />
                             </Box>
                         </CardFooter>
                     </Card>

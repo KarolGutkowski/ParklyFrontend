@@ -1,22 +1,33 @@
 import {create }from "zustand"
-import {fetchAllReservations, fetchReservationById} from "../Components/AccountPage/Reservations/fetchReservations"
+import {fetchAllReservations, cancelReservation} from "../Components/AccountPage/Reservations/fetchReservations"
 
 
 export const useCurrentReservationsStore = create((set)=>
 ({
     reservations: [],
     currentReservation: null,
+    pages: 0,
 
-    fetchReservations: async () =>
+    fetchReservations: async (pageNumber, pageSize) =>
     {
-        const reservations = await fetchAllReservations();
-        set({reservations});
+        const response = await fetchAllReservations(pageNumber, pageSize);
+        set({pages: response.totalPages })
+        set({reservations: response.content});
     },
 
-    fetchToCurrentReservation: async (id)=> 
+    fetchToCurrentReservation: async (reservation)=> 
     {
-        const currentReservation = await fetchReservationById(id);
-        set({currentReservation});
-        console.log(currentReservation);
+        set({currentReservation: reservation});
+    },
+
+    cancelReservationWithId: async (reservation) =>
+    {
+        await cancelReservation(reservation);
+
+        const new_status = reservation.reservationStatus==="ACTIVE"?"CANCELED_BY_ADMIN":"ACTIVE";
+
+        set((state)=>({currentReservation: {...state.currentReservation, reservationStatus: new_status}}))
     }
+
+
 }));

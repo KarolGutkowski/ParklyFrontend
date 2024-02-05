@@ -32,7 +32,7 @@ export const fetchReservationsForId = async (reservationsSetter, id) =>{
 }
 
 
-export const fetchAllReservations = async () =>
+export const fetchAllReservations = async (pageNumber, pageSize) =>
 {
     try{
         const user = getLoggedInUser();
@@ -45,7 +45,7 @@ export const fetchAllReservations = async () =>
             headers: myHeaders,
           };
 
-        const result = await fetch(`${api_address}/admin/reservation`, requestOptions);
+        const result = await fetch(`${api_address}/admin/reservation?` + new URLSearchParams({page: pageNumber, size: pageSize}), requestOptions);
 
         if (!result?.ok)
         {
@@ -53,7 +53,7 @@ export const fetchAllReservations = async () =>
         }
 
         const data = await result.json();
-        return data.content;
+        return data;
     }
     catch(err)
     {
@@ -94,6 +94,36 @@ export async function fetchReservationById(id)
         }
         const data = await response.json();
         return data;
+    } catch (error) {
+        console.error('Error fetching reservations:', error);
+        return 0;
+    }
+}
+const canceled_string = "CANCELED_BY_ADMIN"
+const active_string = "ACTIVE";
+export const cancelReservation = async (reservation) =>
+{
+    try {
+        const user = getLoggedInUser();
+
+        const myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${user.token}`);
+        myHeaders.append("Content-Type", "application/json");
+
+        const new_status = reservation.reservationStatus===active_string?canceled_string:active_string;
+
+        const raw = JSON.stringify({status: new_status});
+
+        const requestOptions = {
+            method: 'PATCH',
+            headers: myHeaders,
+            body: raw
+          };
+
+        const response = await fetch(`${api_address}/admin/reservation/${reservation.id}`, requestOptions);
+        if (!response.ok) {
+            throw new Error('Failed to fetch reservations');
+        }
     } catch (error) {
         console.error('Error fetching reservations:', error);
         return 0;

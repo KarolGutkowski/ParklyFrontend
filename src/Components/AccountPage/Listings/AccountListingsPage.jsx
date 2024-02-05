@@ -1,16 +1,31 @@
-import {Box, Text} from "@chakra-ui/react";
+import {Box, Button, Text, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper} from "@chakra-ui/react";
 import ListingsTable from "./ListingsTable"
-import {useEffect} from "react";
-import {AccountSearchBar} from "../AccountSearchBar";
+import {useEffect, useState} from "react";
+import {AccountSearchBar} from "./AccountSearchBar";
 import { useCurrentListingsStore } from "../../../zustand/listings_store";
+import { PaginationMenu } from "../PaginationMenu";
+import { useDisclosure } from "@chakra-ui/react";
+import {ListingsFilters} from "./ListingsFilters";
+import { IconButton } from "@chakra-ui/react";
+import { FilterIcon } from "../AccountPageIcons";
 
 const AccountListingsPage = () => {
 
-    const fetchListings = useCurrentListingsStore((state)=>(state.fetchAllListings))
+    const {fetchListings, pages} = useCurrentListingsStore((state)=>{
+        return {
+            fetchListings: state.fetchAllListings,
+            pages: state.pages
+        }
+    })
+    const [pageNumber, setPageNumber] = useState(0);
+    const [pageSize, setPageSize] = useState(10);
 
     useEffect(() => {
-        fetchListings();
-    }, [])
+        fetchListings(pageNumber, pageSize);
+    }, [pageNumber, pageSize])
+
+
+    const {isOpen, onToggle} = useDisclosure();
 
     return (
         <Box>
@@ -19,8 +34,12 @@ const AccountListingsPage = () => {
                       textAlign="center">Listings</Text>
             </Box>
             <Box display="flex" flexDir="column" width="80%" margin="auto">
-                <AccountSearchBar/>
-                <ListingsTable />
+                <Box display="flex" justifyContent="right">
+                    {/* <IconButton icon={<FilterIcon/>} onClick={onToggle}/> */}
+                    <PaginationMenu pageSize={pageSize} pageNumber={pageNumber} setPageNumber={setPageNumber} setPageSize={setPageSize} pages={pages}/>
+                </Box>
+                {/* <ListingsFilters isOpen={isOpen}/> */}
+                <ListingsTable defaultValue={pageSize}/>
             </Box>
         </Box>);
 };

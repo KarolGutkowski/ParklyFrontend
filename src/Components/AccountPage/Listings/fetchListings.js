@@ -1,7 +1,7 @@
 import { api_address } from "../../../api_addres";
 import { getLoggedInUser, getAuthorizationHeaders } from "../../LoginLogic/loginLogic";
 
-export const fetchListings = async () =>
+export const fetchListings = async (pageNumber, pageSize) =>
 {
     try{
         var myHeaders = getAuthorizationHeaders()
@@ -12,13 +12,13 @@ export const fetchListings = async () =>
           };
 
 
-        const result = await fetch(`${api_address}/admin/car_park`, requestOptions);
+        const result = await fetch(`${api_address}/admin/car_park?` + new URLSearchParams({page: pageNumber, size: pageSize}), requestOptions);
         if (!result?.ok)
         {
             throw new Error("Error loading listings");
         }
         const data = await result.json();
-        return data.content;
+        return data;
     }
     catch(err)
     {
