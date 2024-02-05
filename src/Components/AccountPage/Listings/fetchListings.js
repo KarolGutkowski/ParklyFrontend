@@ -1,4 +1,5 @@
 import { api_address } from "../../../api_addres";
+import { getLoggedInUser } from "../../LoginLogic/loginLogic";
 
 export const fetchListings = async () =>
 {
@@ -38,12 +39,22 @@ export const fetchListingByIdAsync = async (id) =>
 export const fetchListingsCount = async () =>
 {
     try {
-        const response = await fetch(`${api_address}/listings`);
+        const user = getLoggedInUser();
+
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${user.token}`);
+
+        var requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+          };
+
+        const response = await fetch(`${api_address}/admin/car_park/count`, requestOptions);
         if (!response.ok) {
             throw new Error('Failed to fetch listings');
         }
-        const data = await response.json();
-        return data.length;
+        const car_parks_count = await response.json();
+        return car_parks_count;
     } catch (error) {
         console.error('Error fetching listings:', error);
         return 0;

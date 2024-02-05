@@ -1,5 +1,5 @@
 import { api_address } from "../../../api_addres";
-
+import { getLoggedInUser } from "../../LoginLogic/loginLogic";
 
 export const fetchReservationsForId = (reservationsSetter, id) =>{
     fetch(`${api_address}/reservations`)
@@ -46,12 +46,22 @@ export const fetchAllReservations = async () =>
 
 export async function fetchReservationsCount() {
     try {
-        const response = await fetch(`${api_address}/reservations`);
+        const user = getLoggedInUser();
+
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${user.token}`);
+
+        var requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+          };
+
+        const response = await fetch(`${api_address}/admin/reservation/count`, requestOptions);
         if (!response.ok) {
             throw new Error('Failed to fetch reservations');
         }
-        const data = await response.json();
-        return data.length;
+        const reservations_count = await response.json();
+        return reservations_count;
     } catch (error) {
         console.error('Error fetching reservations:', error);
         return 0;
