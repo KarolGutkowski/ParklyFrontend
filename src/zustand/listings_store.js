@@ -5,11 +5,18 @@ import { fetchListings, fetchListingByIdAsync, fetchUpdateListing } from "../Com
 export const useCurrentListingsStore = create((set) => ({ 
   listings: [], // Array to store all listings
   currentListing: null, // Currently selected listing
+  pages: 0,
 
   // Action to fetch all listings
-  fetchAllListings: async () => {
-    const listings = await fetchListings();
-    set({ listings }); 
+  fetchAllListings: async (page, pageSize) => {
+    const listings = await fetchListings(page, pageSize);
+    set({ pages: listings.totalPages});
+    set({ listings: listings.content }); 
+  },
+
+  setCurrentPage: (page_num) =>
+  {
+      set({currentPage: page_num.content});
   },
 
   // Action to fetch a single listing by ID
@@ -22,7 +29,6 @@ export const useCurrentListingsStore = create((set) => ({
   updateListing: async (id, newData) => {
 
     await fetchUpdateListing(id, newData);
-    debugger;
     await set(async (state) => {
       await state.fetchAllListings(); // Refetch all listings after updating
       await state.fetchListingById(id); // Refetch the current listing after updating

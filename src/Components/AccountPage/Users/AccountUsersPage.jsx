@@ -1,20 +1,31 @@
 import {useEffect} from "react";
-import {Box, Text} from "@chakra-ui/react";
+import {Box, Text,Button, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper } from "@chakra-ui/react";
 import {UsersTable} from "./UsersTable";
 import {UsersSearchBar} from "./UsersSearchBar";
 import { useCurrentUsersStore } from "../../../zustand/users_store";
+import { useState } from "react";
+import { PaginationMenu } from "../PaginationMenu";
+import { set } from "react-hook-form";
 
 const AccountUsersPage = () => {
     
-    const fetchAllUsers = useCurrentUsersStore((state)=>(state.fetchUsers))
+    const {fetchAllUsers, pages} = useCurrentUsersStore((state)=>{
+        return {
+            fetchAllUsers: state.fetchUsers,
+            pages: state.pages
+        }
+    })
 
     const columns = [
         "Id", "First name", "Last name", "Email", "Date of birth"
     ];
 
+    const [pageNumber, setPageNumber] = useState(0);
+    const [pageSize, setPageSize] = useState(10);
+
     useEffect(() => {
-        fetchAllUsers();
-    },[])
+        fetchAllUsers(pageNumber, pageSize);
+    },[pageNumber, pageSize])
 
     return (
         <Box>
@@ -23,8 +34,8 @@ const AccountUsersPage = () => {
                       textAlign="center">Users</Text>
             </Box>
             <Box display="flex" flexDir="column" width="80%" margin="auto">
-
                 <UsersSearchBar/>
+                <PaginationMenu pageSize={pageSize} pageNumber={pageNumber} setPageNumber={setPageNumber} setPageSize={setPageSize} pages={pages}/>
                 <UsersTable columnsNamesList={columns} />
             </Box>
         </Box>

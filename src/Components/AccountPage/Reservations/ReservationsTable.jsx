@@ -74,7 +74,7 @@ function mapToTableRow(item, fetchToCurrentReservation, setCurrentView, fetchToC
             <Link color="blue"
                 onClick={async ()=>
                     {
-                        await fetchToCurrentReservation(item.id);
+                        await fetchToCurrentReservation(item);
                         setCurrentView(RESERVATION_VIEW);
                         console.log(RESERVATION_VIEW)
                     }}

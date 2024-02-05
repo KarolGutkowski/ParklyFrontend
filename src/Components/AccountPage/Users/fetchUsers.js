@@ -29,7 +29,7 @@ export const fetchUsersCount = async () =>
         
 }
 
-export const fetchAllUsers = async () =>
+export const fetchAllUsers = async (pageNumber, pageSize) =>
 {
     try {
         const user = getLoggedInUser();
@@ -42,12 +42,12 @@ export const fetchAllUsers = async () =>
             headers: myHeaders,
           };
 
-        const response = await fetch(`${api_address}/admin/users`, requestOptions);
+        const response = await fetch(`${api_address}/admin/users?` + new URLSearchParams({page: pageNumber, size: pageSize}), requestOptions);
         if (!response.ok) {
             throw new Error('Failed to fetch users');
         }
         const data = await response.json();
-        return data.content;
+        return data;
     } catch (error) {
         console.error('Error fetching users:', error);
         return 0;
