@@ -56,3 +56,14 @@ export const getLoggedInUser = () =>
 
     return {token, email}
 }
+
+
+export function getAuthorizationHeaders()
+{
+    const user = getLoggedInUser();
+
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${user.token}`);
+
+    return myHeaders;
+}

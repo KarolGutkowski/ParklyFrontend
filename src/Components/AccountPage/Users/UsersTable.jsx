@@ -16,6 +16,8 @@ export const UsersTable = ({columnsNamesList}) => {
 
     return (
         <>
+        {users?
+        <>
             <TableContainer marginTop="10px">
                 <Table style={{borderCollapse: "separate", borderSpacing: "0 1rem"}} variant='simple'>
                     <Thead>
@@ -37,24 +39,25 @@ export const UsersTable = ({columnsNamesList}) => {
                         <Skeleton height="70px"/>
                         <Skeleton height="70px"/>
                     </Stack>
-            }
+            }</>:
+            null}
         </>
     );
 }
 
 function mapToTableRow(item, setCurrentPage, fetchToCurrentUser) {
-    return (<Tr bgColor='#c8e3fa' key={item.id}>
+    return (<Tr bgColor='#c8e3fa' key={item.userId}>
         <Td paddingY='2rem' fontSize='1.25rem'>
             <Link color="blue" onClick={async () => {
-                await fetchToCurrentUser(item.id)
+                await fetchToCurrentUser(item.userId)
                 setCurrentPage(USER_VIEW)
             }}>
-                {item.username}
+                {item.userId}
             </Link>
         </Td>
         <Td paddingY='2rem' fontSize='1.25rem'>{item.firstName}</Td>
         <Td paddingY='2rem' fontSize='1.25rem'>{item.lastName}</Td>
         <Td paddingY='2rem' fontSize='1.25rem'>{item.email}</Td>
-        <Td paddingY='2rem' fontSize='1.25rem'>{item.dateOfBirth}</Td>
+        <Td paddingY='2rem' fontSize='1.25rem'>{item.birthDate}</Td>
     </Tr>);
 }

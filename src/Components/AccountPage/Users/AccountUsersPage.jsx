@@ -9,7 +9,7 @@ const AccountUsersPage = () => {
     const fetchAllUsers = useCurrentUsersStore((state)=>(state.fetchUsers))
 
     const columns = [
-        "Username", "First name", "Last name", "Email", "Date of birth"
+        "Id", "First name", "Last name", "Email", "Date of birth"
     ];
 
     useEffect(() => {

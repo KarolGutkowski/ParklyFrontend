@@ -1,4 +1,4 @@
-import {Image, Link, Skeleton, Stack, Table, TableContainer, Tbody, Td, Th, Thead, Tr} from "@chakra-ui/react";
+import {Image, Link, List, Skeleton, Stack, Table, TableContainer, Tbody, Td, Th, Thead, Tr} from "@chakra-ui/react";
 import {LISTING_VIEW} from "../account_page_consts";
 import { useCurrentViewStore } from "../../../zustand/current_view_store"
 import { useCurrentListingsStore } from "../../../zustand/listings_store"
@@ -13,7 +13,7 @@ const ListingsTable = () => {
             fetchListingById: state.fetchListingById
         })
     })
-
+    console.log(listings);
     return (
         <>
             <TableContainer marginTop="10px">
@@ -25,7 +25,6 @@ const ListingsTable = () => {
                             <Th fontSize='1rem'>City</Th>
                             <Th fontSize='1rem'>Street</Th>
                             <Th fontSize='1rem'>Number</Th>
-                            <Th fontSize='1rem'>Image</Th>
                         </Tr>
                     </Thead>
                     <Tbody>
@@ -57,13 +56,10 @@ function mapToTableRow(item, setCurrentPage, fetchListingById) {
                 {item.id}
             </Link>
         </Td>
-        <Td fontSize='1.25rem'>{item.country}</Td>
-        <Td fontSize='1.25rem'>{item.city}</Td>
-        <Td fontSize='1.25rem'>{item.street}</Td>
-        <Td fontSize='1.25rem'>{item.number}</Td>
-        <Td fontSize='1.25rem' borderRightRadius='10px'>
-            <Image src={item.image.src} alt={item.image.alt}/>
-        </Td>
+        <Td fontSize='1.25rem'>{item.iso3166Country}</Td>
+        <Td fontSize='1.25rem'>{item.cityName}</Td>
+        <Td fontSize='1.25rem'>{item.streetName}</Td>
+        <Td fontSize='1.25rem'>{item.buildingNumber}</Td>
     </Tr>);
 }
 

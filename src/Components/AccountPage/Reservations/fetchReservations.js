@@ -1,42 +1,59 @@
 import { api_address } from "../../../api_addres";
-import { getLoggedInUser } from "../../LoginLogic/loginLogic";
+import { getLoggedInUser, getAuthorizationHeaders } from "../../LoginLogic/loginLogic";
 
-export const fetchReservationsForId = (reservationsSetter, id) =>{
-    fetch(`${api_address}/reservations`)
-    .catch(error => {
+export const fetchReservationsForId = async (reservationsSetter, id) =>{
+    
+    try{
+        debugger;
+        const headers = getAuthorizationHeaders()
+
+        var requestOptions = {
+            method: 'GET',
+            headers: headers,
+        };
+
+        const result = await fetch(`${api_address}/admin/reservation/car_park?` + new URLSearchParams({carParkId: id}),
+            requestOptions);
+
+        if (!result?.ok)
+        {
+            console.error("error loading reservations");
+            throw new Error("failed loading reservations for car park " + id);
+        }
+        const data = await result.json();
+
+        reservationsSetter(data.content);
+        
+    }catch(error)
+    {
         console.log("failed loading reservations:", error);
         reservationsSetter([]);
-    })
-    .then(result=>
-        {
-            if (!result?.ok)
-            {
-                console.error("error loading reservations");
-                return null;
-            }
-            return result.json();
-        })
-    .then(data => 
-        {
-            if(data)
-            {
-                data = data.filter(reservation => reservation.itemId === id);
-                reservationsSetter(data);
-            }
-        })
+    }
 }
 
 
 export const fetchAllReservations = async () =>
 {
     try{
-        const result = await fetch(`${api_address}/reservations`);
+        const user = getLoggedInUser();
+
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${user.token}`);
+        
+        var requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+          };
+
+        const result = await fetch(`${api_address}/admin/reservation`, requestOptions);
+
         if (!result?.ok)
         {
             throw new Error("Error loading reservations");
         }
+
         const data = await result.json();
-        return data;
+        return data.content;
     }
     catch(err)
     {

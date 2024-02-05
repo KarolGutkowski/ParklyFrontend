@@ -1,5 +1,5 @@
 import { api_address } from "../../../api_addres";
-import { getLoggedInUser } from "../../LoginLogic/loginLogic";
+import { getLoggedInUser, getAuthorizationHeaders } from "../../LoginLogic/loginLogic";
 
 export const fetchUsersCount = async () =>
 {
@@ -32,12 +32,22 @@ export const fetchUsersCount = async () =>
 export const fetchAllUsers = async () =>
 {
     try {
-        const response = await fetch(`${api_address}/users`);
+        const user = getLoggedInUser();
+
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${user.token}`);
+
+        var requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+          };
+
+        const response = await fetch(`${api_address}/admin/users`, requestOptions);
         if (!response.ok) {
             throw new Error('Failed to fetch users');
         }
         const data = await response.json();
-        return data;
+        return data.content;
     } catch (error) {
         console.error('Error fetching users:', error);
         return 0;
@@ -47,14 +57,28 @@ export const fetchAllUsers = async () =>
 export const fetchUserById = async (id) =>
 {
     try {
-        const response = await fetch(`${api_address}/users/${id}`);
+
+        var myHeaders = getAuthorizationHeaders()
+
+        var requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+          };
+
+        const response = await fetch(`${api_address}/admin/users?` + new URLSearchParams({userId: id}), requestOptions);
+
         if (!response.ok) {
             throw new Error('Failed to fetch users');
         }
         const data = await response.json();
-        return data;
+
+        if(data.totalElements!==1)
+            throw new Error('Failed to fetch users');
+        
+        return data.content[0];
     } catch (error) {
         console.error('Error fetching users:', error);
         return 0;
     }
 }
+

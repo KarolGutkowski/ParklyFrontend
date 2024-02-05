@@ -21,7 +21,6 @@ export const UserView = () => {
         console.log(value);
     }
 
-
     return (
         <Box>
             <Box mb='20px'>
@@ -43,11 +42,10 @@ export const UserView = () => {
         
                         {!isEditingMode?
                         <Box width="70%">
-                            <Text fontSize='1.5rem'>Username: {user.username}</Text>
                             <Text fontSize='1.5rem'>First name: {user.firstName}</Text>
                             <Text fontSize='1.5rem'>Last name: {user.lastName}</Text>
                             <Text fontSize='1.5rem'>Email: {user.email}</Text>
-                            <Text fontSize='1.5rem'>Date of birth: {user.dateOfBirth}</Text>
+                            <Text fontSize='1.5rem'>Date of birth: {user.birthDate}</Text>
                         </Box>
                         :
                             <Box width="70%">
@@ -74,7 +72,7 @@ export const UserView = () => {
                                                 {required: 'This field is required'}
                                             )}/>
                                             Date of birth:
-                                            <Input fontSize='1.5rem' defaultValue={user.dateOfBirth} {   
+                                            <Input fontSize='1.5rem' defaultValue={user.birthDate} {   
                                                 ...register('dateOfBirth',
                                                 {required: 'This field is required'}
                                             )}/>

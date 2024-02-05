@@ -1,7 +1,8 @@
 import {Link, Skeleton, Stack, Table, TableContainer, Tbody, Td, Th, Thead, Tr} from "@chakra-ui/react";
 import { useCurrentViewStore } from '../../zustand/current_view_store';
 import { useCurrentReservationsStore } from "../../zustand/reservations_store";
-import { RESERVATION_VIEW } from "./account_page_consts";
+import { RESERVATION_VIEW, USER_VIEW } from "./account_page_consts";
+import {useCurrentUsersStore} from "../../zustand/users_store"
 
 export const ReservationsForEntity = (props) => {
     const {columnsNamesList} = props;
@@ -15,6 +16,13 @@ export const ReservationsForEntity = (props) => {
         {
             fetchToCurrentReservation: state.fetchToCurrentReservation
         });
+    })
+
+    const {fetchToCurrentlyViewedUser} = useCurrentUsersStore((state)=> 
+    {
+        return {
+            fetchToCurrentlyViewedUser: state.fetchToCurrentlyViewedUser
+        }
     })
 
     const columns = [];
@@ -34,7 +42,7 @@ export const ReservationsForEntity = (props) => {
                     </Thead>
                     <Tbody>
                         {rowData ? rowData.map(item => {
-                            return mapToTableRow(item, fetchToCurrentReservation, setCurrentView);
+                            return mapToTableRow(item, fetchToCurrentReservation, setCurrentView, fetchToCurrentlyViewedUser);
                         }) : null}
                     </Tbody>
                 </Table>
@@ -51,10 +59,12 @@ export const ReservationsForEntity = (props) => {
     );
 }
 
-function mapToTableRow(item, fetchToCurrentReservation, setCurrentView) {
-    return (<Tr bgColor='#c8e3fa' key={item.id}>
+function mapToTableRow(item, fetchToCurrentReservation, setCurrentView, fetchToCurrentlyViewedUser) {
+    const isCanceled = item.reservationStatus==="CANCELED_BY_ADMIN"
+
+    return (<Tr bgColor={isCanceled?'#e89768':'#c8e3fa'} key={item.id}>
         <Td paddingY='2rem' fontSize='1.25rem'>
-            <Link
+            <Link color="blue"
                 onClick={async ()=>
                     {
                         await fetchToCurrentReservation(item.id);
@@ -66,15 +76,19 @@ function mapToTableRow(item, fetchToCurrentReservation, setCurrentView) {
         <Td paddingY='2rem' fontSize='1.25rem'>{item.startDate}</Td>
         <Td paddingY='2rem' fontSize='1.25rem'>{item.endDate}</Td>
         <Td paddingY='2rem' fontSize='1.25rem'>
-            <Link>
-                {item.user}
+            <Link color="blue" onClick={async ()=>
+            {
+                await fetchToCurrentlyViewedUser(item.userId);
+                setCurrentView(USER_VIEW)
+            }}>
+                {item.userId}
             </Link>
         </Td>
-        <Td paddingY='2rem' fontSize='1.25rem'>{item.type}</Td>
-        <Td paddingY='2rem' fontSize='1.25rem'>{item.itemId}</Td>
+        <Td paddingY='2rem' fontSize='1.25rem'>{item.reservationStatus}</Td>
         <Td paddingY='2rem' fontSize='1.25rem'
             style={{overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '350px'}}>
             {item.info}
         </Td>
     </Tr>);
 }
+

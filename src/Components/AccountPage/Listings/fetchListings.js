@@ -1,16 +1,24 @@
 import { api_address } from "../../../api_addres";
-import { getLoggedInUser } from "../../LoginLogic/loginLogic";
+import { getLoggedInUser, getAuthorizationHeaders } from "../../LoginLogic/loginLogic";
 
 export const fetchListings = async () =>
 {
     try{
-        const result = await fetch(`${api_address}/listings`);
+        var myHeaders = getAuthorizationHeaders()
+
+        var requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+          };
+
+
+        const result = await fetch(`${api_address}/admin/car_park`, requestOptions);
         if (!result?.ok)
         {
             throw new Error("Error loading listings");
         }
         const data = await result.json();
-        return data;
+        return data.content;
     }
     catch(err)
     {
@@ -22,13 +30,25 @@ export const fetchListings = async () =>
 export const fetchListingByIdAsync = async (id) =>
 {
     try{
-        const result = await fetch(`${api_address}/listings/${id}`);
+        var myHeaders = getAuthorizationHeaders()
+
+        var requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+        };
+
+        const result = await fetch(`${api_address}/admin/car_park?` + new URLSearchParams({id: id}), requestOptions);
+
         if (!result?.ok)
         {
             throw new Error("Error loading listings");
         }
         const data = await result.json();
-        return data;
+
+        if(data.totalElements!==1)
+            throw new Error('Failed to fetch users');
+
+        return data.content[0];
     }
     catch(err)
     {
@@ -60,4 +80,29 @@ export const fetchListingsCount = async () =>
         return 0;
     }
         
+}
+
+export const fetchUpdateListing = async (id, newData) =>
+{
+    try {
+        var myHeaders = getAuthorizationHeaders();
+
+        myHeaders.append("Content-Type", "application/json");
+
+        var requestOptions = {
+            method: 'PATCH',
+            headers: myHeaders,
+            body: JSON.stringify(newData)
+        };
+
+        const response = await fetch(`${api_address}/admin/car_park/${id}`, requestOptions);
+        if (!response.ok) 
+        {
+            throw new Error('Failed to fetch update listing');
+        }
+
+    } catch (error) {
+        console.error('Error while updating listing:', error);
+        return 0;
+    }
 }

@@ -1,4 +1,4 @@
-import {Box, Button, Card, CardBody, CardFooter, CardHeader, Heading, Image, Text, Input} from "@chakra-ui/react";
+import {Box, Button, Card, CardBody, CardFooter, CardHeader, Heading, Image, Text, Input, Checkbox} from "@chakra-ui/react";
 import {LISTINGS_PAGE, reservations_columns} from "../account_page_consts";
 import {ReservationsForEntity} from "../ReservationsForEntity"
 import { useState, useEffect } from "react";
@@ -8,6 +8,7 @@ import { fetchReservationsForId } from "../Reservations/fetchReservations";
 import { useCurrentViewStore } from "../../../zustand/current_view_store";
 import { useCurrentListingsStore } from "../../../zustand/listings_store";
 import {useForm} from "react-hook-form"
+import example_spot_image from "../../../img/parking_spot_example.png"
 
 const VIEW_MODE = "VIEW_MODE"
 const EDIT_MODE = "EDIT_MODE"
@@ -41,15 +42,11 @@ export const ListingView = () => {
     {
         e.preventDefault();
         console.log(value);
-        const updated = {
-            id: currentListing.id,
-            ...value,
-        }
 
-        updateListing(currentListing.id, updated);
+        updateListing(currentListing.id, value);
         setlistingDisplayMode(VIEW_MODE);
     }
-
+    console.log(currentListing);
     return (
         
         currentListing?
@@ -66,43 +63,35 @@ export const ListingView = () => {
                                     onClick={() => setCurrentView(LISTINGS_PAGE)}>Back</Button>
                             <Heading margin='auto' fontSize='1.875rem' size='md'> Listing {currentListing.id} details</Heading>
                         </CardHeader>
-                        <CardBody display='flex'>
-                            <Box mr='1rem' width='50%'>
-                                <Image src={currentListing.image.src} alt={currentListing.image.alt} height="256px" width="521px"/>
+                        <CardBody display='flex' gap="20px">
+                            <Box minWidth="250px">
+                                <Image src={example_spot_image} alt="image alt" height="256px" width="250px"/>
                             </Box >
-                            {listingDisplayMode===VIEW_MODE?
-                                <Box width="70%">
-                                    <Text fontSize='1.5rem'>Country: {currentListing.country}</Text>
-                                    <Text fontSize='1.5rem'>City: {currentListing.city}</Text>
-                                    <Text fontSize='1.5rem'>Street: {currentListing.street}</Text>
-                                    <Text fontSize='1.5rem'>Number: {currentListing.number}</Text>
+                                <Box width="80%" display="flex" flexDir="column">
+                                    <Text fontSize='1.5rem'>Country: {currentListing.iso3166Country}</Text>
+                                    <Text fontSize='1.5rem'>City: {currentListing.cityName}</Text>
+                                    <Text fontSize='1.5rem'>Postal Code: {currentListing.postalCode}</Text>
+                                    <Text fontSize='1.5rem'>Street: {currentListing.streetName}</Text>
+                                    <Text fontSize='1.5rem'>Number: {currentListing.buildingNumber}</Text>
+                                    <Text fontSize='1.5rem'>Longitde: {currentListing.longitude}</Text>
+                                    <Text fontSize='1.5rem'>Latitude: {currentListing.latitude}</Text>
+                                    {listingDisplayMode===VIEW_MODE?
+                                        <>
+                                            <Text fontSize='1.5rem'>Daily cost: {currentListing.dailyCost}</Text>
+                                            <Text fontSize='1.5rem'>Active: {currentListing.active?"yes":"no"}</Text>
+                                        </>:
+                                    <form id="edit-listing-form" onSubmit={handleSubmit(editListing)}>
+                                        Daily cost:
+                                        <Input fontSize='1.5rem' defaultValue={currentListing.dailyCost} {   
+                                            ...register('dailyCost',
+                                            {required: 'This field is required'}
+                                        )}/>
+                                        
+                                        <Checkbox defaultChecked={currentListing.active} 
+                                            {...register('active')}>Active</Checkbox>    
+                                    </form>
+                                    }
                                 </Box>
-                            :
-                                <form id="edit-listing-form" onSubmit={handleSubmit(editListing)}>
-                                    <Box width="70%">
-                                        Country: 
-                                        <Input fontSize='1.5rem' defaultValue={currentListing.country} {   
-                                            ...register('country',
-                                            {required: 'This field is required'}
-                                        )}/>
-                                        City:
-                                        <Input fontSize='1.5rem' defaultValue={currentListing.city} {   
-                                            ...register('city',
-                                            {required: 'This field is required'}
-                                        )}/>
-                                        Street:
-                                        <Input fontSize='1.5rem' defaultValue={currentListing.street} {   
-                                            ...register('street',
-                                            {required: 'This field is required'}
-                                        )}/>
-                                        Number:
-                                        <Input fontSize='1.5rem' defaultValue={currentListing.number} {   
-                                            ...register('number',
-                                            {required: 'This field is required'}
-                                        )}/>
-                                    </Box>
-                                </form>
-                            }
                         </CardBody>
                         <CardFooter display="flex" justifyContent="center">
                             <Box width='100%' display='flex' justifyContent='center' gap="10px">
@@ -117,7 +106,7 @@ export const ListingView = () => {
                             </Box>
                         </CardFooter>
                     </Card>
-                    <ReservationsForEntity columnsNamesList={reservations_columns} rowData={reservationsForListing}/>
+                    <ReservationsForEntity columnsNamesList={reservations_columns.filter(column => column !== "Car park")} rowData={reservationsForListing}/>
                 </Box>
             </Box>
         </>:
