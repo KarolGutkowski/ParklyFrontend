@@ -1,42 +1,20 @@
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import {Box, Text} from "@chakra-ui/react";
 import {UsersTable} from "./UsersTable";
 import {UsersSearchBar} from "./UsersSearchBar";
-import user_img from "../../../img/example_profile_pict.jpg";
+import { useCurrentUsersStore } from "../../../zustand/users_store";
 
-const AccountUsersPage = ({setUserDetails}) => {
-    const [users, setUsers] = useState([
-        {
-            "id": 21,
-            "username": "jp2137",
-            "firstName": "Karol",
-            "lastName": "Wojtyła",
-            "email": "superEmail@gmail.com",
-            "dateOfBirth": "01.01.2005",
-            image:{
-                src: {user_img},
-                alt: "user avatar"
-            }
-        }]);
+const AccountUsersPage = () => {
+    
+    const fetchAllUsers = useCurrentUsersStore((state)=>(state.fetchUsers))
+
     const columns = [
         "Username", "First name", "Last name", "Email", "Date of birth"
     ];
 
-    // useEffect(() => {
-    //     fetch(`${api_address}/reservations`)
-    //         .then(result => {
-    //             if (!result.ok) {
-    //                 console.error("error loading users");
-    //                 return null;
-    //             }
-    //             return result.json();
-    //         })
-    //         .then(data => {
-    //             if (data) {
-    //                 setUsers(data);
-    //             }
-    //         })
-    // })
+    useEffect(() => {
+        fetchAllUsers();
+    },[])
 
     return (
         <Box>
@@ -47,9 +25,7 @@ const AccountUsersPage = ({setUserDetails}) => {
             <Box display="flex" flexDir="column" width="80%" margin="auto">
 
                 <UsersSearchBar/>
-                <UsersTable columnsNamesList={columns} rowData={users}
-                            setUserDetails={setUserDetails}
-                />
+                <UsersTable columnsNamesList={columns} />
             </Box>
         </Box>
     )

@@ -16,7 +16,7 @@
       "country": "Germany",
       "city": "Warszawa",
       "street": "Koszykowa",
-      "number": "12a",
+      "number": "12",
       "image": {
         "src": "./static/media/parking_spot_example.b1a03108a34703a3d9e7.png",
         "alt": "example parking spot"
@@ -31,6 +31,32 @@
       "image": {
         "src": "./static/media/parking_spot_example.b1a03108a34703a3d9e7.png",
         "alt": "example parking spot"
+      }
+    }
+  ],
+  "users":[
+    {
+      "id": "1",
+      "username": "jp2137",
+      "firstName": "Karol",
+      "lastName": "Wojtyła",
+      "email": "superEmail@gmail.com",
+      "dateOfBirth": "01.01.2005",
+      "image":{
+          "src": "./static/media/parking_spot_example.b1a03108a34703a3d9e7.png",
+          "alt": "user avatar"
+      }
+    },
+    {
+      "id": "2",
+      "username": "dwadwa7",
+      "firstName": "Karol321",
+      "lastName": "Wojtyłasdawa",
+      "email": "supedwarEmail@gmail.com",
+      "dateOfBirth": "17.06.2001",
+      "image":{
+          "src": "./static/media/parking_spot_example.b1a03108a34703a3d9e7.png",
+          "alt": "user avatar"
       }
     }
   ]

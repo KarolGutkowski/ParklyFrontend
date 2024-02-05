@@ -22,17 +22,19 @@ import logo from "../../img/parkly_logo_black.png";
 import { useCurrentViewStore } from "../../zustand/current_view_store";
 import { useCurrentUserStore } from '../../zustand/current_user_store';
 import { useNavigate} from 'react-router-dom';
+import { getLoggedInUser } from '../LoginLogic/loginLogic'
 
 const AccountSidebar = (props) => {
     const {isOpen, onOpen, onClose} = useDisclosure()
     const btnRef = useRef()
     const navigate = useNavigate();
     const setCurrentView = useCurrentViewStore((state)=>state.changeView);
-    const {currentUser, logoutCurrentUser} = useCurrentUserStore((state)=>
+    const {currentUser, logoutCurrentUser, setCurrentUser} = useCurrentUserStore((state)=>
     {
         return ({
             currentUser: state.currentUser,
-            logoutCurrentUser: state.logoutCurrentUser
+            logoutCurrentUser: state.logoutCurrentUser,
+            setCurrentUser: state.setCurrentUser
         })
     })
 
@@ -41,7 +43,12 @@ const AccountSidebar = (props) => {
     {
         if(currentUser === null || currentUser.username === null)
         {
-            navigate("/");
+            const loggedInUser = getLoggedInUser();
+
+            if(!loggedInUser) //if null redirect to mainpage
+                navigate("/");
+
+            setCurrentUser(loggedInUser);
         }
     }, [currentUser])
     
@@ -70,7 +77,7 @@ const AccountSidebar = (props) => {
                     <DrawerHeader alignItems="center" textAlign="center">
                         <Image borderRadius='full' boxSize='150px' src='https://bit.ly/dan-abramov' alt='Dan Abramov'
                                marginTop="10px"/>
-                        <Text color='white' fontSize='md'>{currentUser.username}</Text>
+                        <Text color='white' fontSize='md'>{currentUser.email}</Text>
                         <Text fontSize='md' color="#C64F4F">Admin</Text>
                     </DrawerHeader>
 

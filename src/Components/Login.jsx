@@ -1,12 +1,15 @@
-import { Box, Button, Image, Input, Heading, AbsoluteCenter} from '@chakra-ui/react'
-import {NavLink, useNavigate} from 'react-router-dom';
+import { Box, Button, Image, Input, Heading, AbsoluteCenter, Text} from '@chakra-ui/react'
+import {useNavigate} from 'react-router-dom';
 import logo from "../img/parkly_logo_black.png";
 import { useCurrentUserStore } from '../zustand/current_user_store';
 import {useForm} from "react-hook-form"
+import {fetchLogin} from "./LoginLogic/loginLogic"
+import { useState } from 'react';
+
 
 const Login = () => {
     const navigate = useNavigate();
-
+    const [loginAttemptFailed, setLoginAttemptFailed] = useState(false);
     const loginUser = useCurrentUserStore((state)=> {
         return state.setCurrentUser;
     });
@@ -14,17 +17,29 @@ const Login = () => {
     const {
         handleSubmit,
         register,
-        setValue,
-        clearErrors
     } = useForm()
 
-    function onLoginAttempt(value)
+    async function onLoginAttempt(value, event)
     {
-        //verify login attempt and assign username + jwt
-        loginUser({
-            username: value.username
-        });
-        navigate("/account");
+        event.preventDefault();
+
+        const userdata = {
+            email: value.email,
+            password: value.password
+        };
+
+        try
+        {
+            await fetchLogin(userdata);
+            loginUser({
+                email: value.email,
+            });
+
+            navigate("/account");
+        }catch(err)
+        {
+            setLoginAttemptFailed(true);
+        }
     }
 
     return (
@@ -36,9 +51,9 @@ const Login = () => {
                 <form onSubmit={handleSubmit(onLoginAttempt)}>
                     <Box display="flex" flexDir="column" alignItems="center" justifyItems="center">
                         <Heading fontSize='2rem' size='md' onC>Login</Heading>
-                            <Input placeholder='Username' size='md' marginTop={5} variant="filled" color="black"
+                            <Input placeholder='Email' type="email" size='md' marginTop={5} variant="filled" color="black"
                             {   
-                                ...register('username',
+                                ...register('email',
                                 {required: 'This field is required'}
                             )}/>
                             <Input type="password" placeholder='Password' size='md' marginTop={5} variant="filled" color="black"
@@ -49,6 +64,12 @@ const Login = () => {
                             <Button mt={4} colorScheme='blackAlpha' bgColor='#010016' type='submit'>
                                 Submit
                             </Button>
+                            {
+                                loginAttemptFailed?
+                                <Text color="red">Failed login attempt. Try again</Text>
+                                :null
+                            }
+
                     </Box>
                 </form>
             </AbsoluteCenter>

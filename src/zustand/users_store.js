@@ -6,13 +6,13 @@ export const useCurrentUsersStore = create((set)=>(
     users: [],
     currentlyViewedUser: null,
 
-    fetchReservations: async () =>
+    fetchUsers: async () =>
     {
         const users = await fetchAllUsers();
         set({users});
     },
 
-    fetchToCurrentReservation: async (id)=> 
+    fetchToCurrentlyViewedUser: async (id)=> 
     {
         const currentlyViewedUser = await fetchUserById(id);
         set({currentlyViewedUser});

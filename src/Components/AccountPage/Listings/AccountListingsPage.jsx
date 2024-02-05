@@ -1,17 +1,16 @@
 import {Box, Text} from "@chakra-ui/react";
 import ListingsTable from "./ListingsTable"
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import {AccountSearchBar} from "../AccountSearchBar";
 import { useCurrentListingsStore } from "../../../zustand/listings_store";
 
-const AccountListingsPage = ({setParkingDetails}) => {
+const AccountListingsPage = () => {
 
     const fetchListings = useCurrentListingsStore((state)=>(state.fetchAllListings))
 
     useEffect(() => {
         fetchListings();
     }, [])
-
 
     return (
         <Box>
@@ -21,7 +20,7 @@ const AccountListingsPage = ({setParkingDetails}) => {
             </Box>
             <Box display="flex" flexDir="column" width="80%" margin="auto">
                 <AccountSearchBar/>
-                <ListingsTable setParkingDetails={setParkingDetails}/>
+                <ListingsTable />
             </Box>
         </Box>);
 };

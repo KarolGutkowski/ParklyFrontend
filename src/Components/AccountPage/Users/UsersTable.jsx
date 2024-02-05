@@ -1,10 +1,13 @@
 import {Link, Skeleton, Stack, Table, TableContainer, Tbody, Td, Th, Thead, Tr} from "@chakra-ui/react";
 import {USER_VIEW} from "../account_page_consts";
 import { useCurrentViewStore } from "../../../zustand/current_view_store"
+import { useCurrentUsersStore } from "../../../zustand/users_store";
 
-export const UsersTable = ({columnsNamesList, rowData, setUserDetails}) => {
+export const UsersTable = ({columnsNamesList}) => {
     const columns = [];
 
+    const users = useCurrentUsersStore((state)=>state.users);
+    const fetchToCurrentlyViewedUser = useCurrentUsersStore((state)=>state.fetchToCurrentlyViewedUser);
     const setCurrentView = useCurrentViewStore((state)=>state.changeView);
 
     columnsNamesList.forEach(name => {
@@ -21,14 +24,14 @@ export const UsersTable = ({columnsNamesList, rowData, setUserDetails}) => {
                         </Tr>
                     </Thead>
                     <Tbody>
-                        {rowData ? rowData.map(item => {
-                            return mapToTableRow(item, setCurrentView, setUserDetails);
+                        {users ? users.map(item => {
+                            return mapToTableRow(item, setCurrentView, fetchToCurrentlyViewedUser);
                         }) : null}
                     </Tbody>
                 </Table>
             </TableContainer>
             {
-                rowData ? null :
+                users ? null :
                     <Stack padding={4} spacing={1}>
                         <Skeleton height="70px"/>
                         <Skeleton height="70px"/>
@@ -39,12 +42,12 @@ export const UsersTable = ({columnsNamesList, rowData, setUserDetails}) => {
     );
 }
 
-function mapToTableRow(item, setCurrentPage, setUserDetails) {
+function mapToTableRow(item, setCurrentPage, fetchToCurrentUser) {
     return (<Tr bgColor='#c8e3fa' key={item.id}>
         <Td paddingY='2rem' fontSize='1.25rem'>
-            <Link color="blue" onClick={() => {
-                setCurrentPage(USER_VIEW + item.id)
-                setUserDetails(item)
+            <Link color="blue" onClick={async () => {
+                await fetchToCurrentUser(item.id)
+                setCurrentPage(USER_VIEW)
             }}>
                 {item.username}
             </Link>

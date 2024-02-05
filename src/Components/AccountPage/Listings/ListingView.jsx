@@ -1,9 +1,9 @@
-import {Box, Button, Card, CardBody, CardFooter, CardHeader, Heading, Image, Text, Input, list} from "@chakra-ui/react";
+import {Box, Button, Card, CardBody, CardFooter, CardHeader, Heading, Image, Text, Input} from "@chakra-ui/react";
 import {LISTINGS_PAGE, reservations_columns} from "../account_page_consts";
 import {ReservationsForEntity} from "../ReservationsForEntity"
 import { useState, useEffect } from "react";
 import { RemoveListing } from "./ConfirmRemoveListingAlert";
-import { SaveListingChanges } from "../SaveListingsChanges";
+import { SaveListingChanges } from "./SaveListingsChanges";
 import { fetchReservationsForId } from "../Reservations/fetchReservations";
 import { useCurrentViewStore } from "../../../zustand/current_view_store";
 import { useCurrentListingsStore } from "../../../zustand/listings_store";
@@ -27,10 +27,7 @@ export const ListingView = () => {
     const [listingDisplayMode, setlistingDisplayMode] = useState(VIEW_MODE);
     const [reservationsForListing, setReserevationsForListing] = useState(null);
 
-    const {
-        handleSubmit,
-        register,
-    } = useForm()
+    const { handleSubmit, register} = useForm()
 
     useEffect(()=>
     {
