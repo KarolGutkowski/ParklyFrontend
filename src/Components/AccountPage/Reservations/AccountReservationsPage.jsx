@@ -31,7 +31,7 @@ const AccountReservationsPage = () => {
                       textAlign="center">Reservations</Text>
             </Box>
             <Box display="flex" flexDir="column" width="80%" margin="auto">
-                <ReservationsSerachBar/>
+                <ReservationsSerachBar />
                 <PaginationMenu pageSize={pageSize} pageNumber={pageNumber} setPageNumber={setPageNumber} setPageSize={setPageSize} pages={pages}/>
                 <ReservationsTable columnsNamesList={reservations_columns}/>
             </Box>

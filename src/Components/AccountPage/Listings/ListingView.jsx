@@ -1,20 +1,29 @@
-import {Box, Button, Card, CardBody, CardFooter, CardHeader, Heading, Image, Text, Input, Checkbox} from "@chakra-ui/react";
+import {Box, Button, Card, CardBody, CardFooter, 
+    CardHeader, Heading, Image, Text, Input, Checkbox, Tabs, Tab, TabList,
+    TabPanels, TabPanel} from "@chakra-ui/react";
 import {LISTINGS_PAGE, reservations_columns} from "../account_page_consts";
 import {ReservationsForEntity} from "../ReservationsForEntity"
 import { useState, useEffect } from "react";
-import { RemoveListing } from "./ConfirmRemoveListingAlert";
+import { AddSpotToListing, RemoveListing } from "./AddSpotToListing";
 import { SaveListingChanges } from "./SaveListingsChanges";
 import { fetchReservationsForId } from "../Reservations/fetchReservations";
 import { useCurrentViewStore } from "../../../zustand/current_view_store";
 import { useCurrentListingsStore } from "../../../zustand/listings_store";
 import {useForm} from "react-hook-form"
 import example_spot_image from "../../../img/parking_spot_example.png"
+import { SpotsForListing } from "./SpotsForListing";
+import { api_address } from "../../../api_addres";
+import { getAuthorizationHeaders } from "../../LoginLogic/loginLogic";
 
 const VIEW_MODE = "VIEW_MODE"
 const EDIT_MODE = "EDIT_MODE"
 
+const RESERVATIONS = "RESERVATIONS";
+const SPOTS = "SPOTS";
+
 export const ListingView = () => {
 
+    const [currentTab , setCurrentTab] = useState(RESERVATIONS);
     const {currentListing, updateListing} = useCurrentListingsStore((state)=>
     {
         return {
@@ -41,11 +50,49 @@ export const ListingView = () => {
     function editListing(value, e)
     {
         e.preventDefault();
-        console.log(value);
 
         updateListing(currentListing.id, value);
         setlistingDisplayMode(VIEW_MODE);
     }
+
+    function handleProfileImageOnClick(event)
+    {
+        const fileInput = document.getElementById("upload-avatar");
+        fileInput.click();
+    }
+
+    async function handleFielInputOnChange(event)
+    {
+        debugger;
+        const my_headers = getAuthorizationHeaders();
+
+        const fileInput = document.getElementById("upload-avatar");
+        const file = fileInput.files[0];
+        const formData = new FormData();
+        formData.append("image", file);
+        
+        try {
+            const result = await fetch(`${api_address}/car_park/${currentListing.id}/image/upload`,{
+                method: 'POST',
+                body: formData,
+                headers: my_headers
+            });
+            
+            if(!result.ok)
+            {
+                console.error("cant update your profile now :(");
+                return;
+            }else{
+                const url = URL.createObjectURL(file);
+                const profilePicture = document.getElementById("profile-avatar");
+                profilePicture.setAttribute("src", url);
+            }
+        }  catch(err)  
+        {
+            console.error("Failed saving image:", err);
+        } 
+    }
+
     console.log(currentListing);
     return (
         
@@ -65,7 +112,15 @@ export const ListingView = () => {
                         </CardHeader>
                         <CardBody display='flex' gap="20px">
                             <Box minWidth="250px">
-                                <Image src={example_spot_image} alt="image alt" height="256px" width="250px"/>
+                                <input type="file" 
+                                    id="upload-avatar" 
+                                    accept="image/*" 
+                                    hidden="true"
+                                    onChange={handleFielInputOnChange}/>
+                                <Image src={currentListing.img?currentListing.img:example_spot_image} 
+                                    id="profile-avatar" 
+                                    onClick={handleProfileImageOnClick}
+                                    alt="image alt" height="256px" width="250px"/>
                             </Box >
                                 <Box width="80%" display="flex" flexDir="column">
                                     <Text fontSize='1.5rem'>Country: {currentListing.iso3166Country}</Text>
@@ -102,11 +157,26 @@ export const ListingView = () => {
                                         <SaveListingChanges />
                                     </>
                                 }
-                                    <RemoveListing />
+                                <AddSpotToListing id={currentListing.id}/>
                             </Box>
                         </CardFooter>
                     </Card>
-                    <ReservationsForEntity columnsNamesList={reservations_columns.filter(column => column !== "Car park")} rowData={reservationsForListing}/>
+                    <Tabs isFitted variant='enclosed' marginTop="20px">
+                        <TabList>
+                            <Tab onClick={()=>setCurrentTab(RESERVATIONS)}>Reservations</Tab>
+                            <Tab onClick={()=>setCurrentTab(SPOTS)}>Spots</Tab>
+                        </TabList>
+
+                        <TabPanels>
+                            <TabPanel>
+                                <ReservationsForEntity columnsNamesList={reservations_columns.filter(column => column !== "Car park")} rowData={reservationsForListing}/>
+                            </TabPanel>
+                            <TabPanel>
+                                <SpotsForListing id={currentListing.id} currentlyOpenedTab={currentTab}/>
+                            </TabPanel>
+                        </TabPanels>
+                    </Tabs>
+                    {/* <ReservationsForEntity columnsNamesList={reservations_columns.filter(column => column !== "Car park")} rowData={reservationsForListing}/> */}
                 </Box>
             </Box>
         </>:
