@@ -9,6 +9,7 @@ export const ReservationsTable = (props) => {
     const {columnsNamesList} = props;
 
     const setCurrentView = useCurrentViewStore((state)=>state.changeView);
+    
     const {rowData, fetchToCurrentReservation} = useCurrentReservationsStore((state)=>
     {
         return (

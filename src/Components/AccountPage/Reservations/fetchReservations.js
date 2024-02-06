@@ -31,7 +31,7 @@ export const fetchReservationsForId = async (reservationsSetter, id) =>{
 }
 
 
-export const fetchAllReservations = async (pageNumber, pageSize) =>
+export const fetchAllReservations = async (pageNumber, pageSize, filters) =>
 {
     try{
         const user = getLoggedInUser();
@@ -44,7 +44,7 @@ export const fetchAllReservations = async (pageNumber, pageSize) =>
             headers: myHeaders,
           };
 
-        const result = await fetch(`${api_address}/admin/reservation?` + new URLSearchParams({page: pageNumber, size: pageSize}), requestOptions);
+        const result = await fetch(`${api_address}/admin/reservation?` + new URLSearchParams({page: pageNumber, size: pageSize, ...filters}), requestOptions);
 
         if (!result?.ok)
         {

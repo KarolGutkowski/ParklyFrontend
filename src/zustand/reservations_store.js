@@ -8,9 +8,10 @@ export const useCurrentReservationsStore = create((set)=>
     currentReservation: null,
     pages: 0,
 
-    fetchReservations: async (pageNumber, pageSize) =>
+    fetchReservations: async (pageNumber, pageSize, filters) =>
     {
-        const response = await fetchAllReservations(pageNumber, pageSize);
+        const response = await fetchAllReservations(pageNumber, pageSize, filters);
+        debugger;
         set({pages: response.totalPages })
         set({reservations: response.content});
     },
