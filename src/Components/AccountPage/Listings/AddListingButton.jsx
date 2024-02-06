@@ -2,7 +2,7 @@ import { useRef } from "react"
 import { useDisclosure } from "@chakra-ui/react"
 import { Button, Modal, ModalOverlay,  
     ModalContent, ModalHeader, ModalCloseButton, 
-    ModalBody, FormControl, FormLabel,Input, ModalFooter} from "@chakra-ui/react"
+    ModalBody, FormControl, FormLabel,Input, ModalFooter, InputGroup, InputLeftElement} from "@chakra-ui/react"
 import { useCurrentListingsStore } from "../../../zustand/listings_store"
 import {useForm} from "react-hook-form"
 
@@ -122,11 +122,19 @@ export const AddListingButton = (props)=> {
 
                 <FormControl mt={4}>
                     <FormLabel>Daily Cost</FormLabel>
-                    <Input placeholder='3.5' 
-                    {   
-                        ...register('dailyCost',
-                        {required: 'This field is required'}
-                    )}/>
+                        <InputGroup>
+                            <InputLeftElement
+                            pointerEvents='none'
+                            color='gray.300'
+                            fontSize='1.2em'
+                            >
+                            $</InputLeftElement>
+                            <Input placeholder='3.5' 
+                            {   
+                                ...register('dailyCost',
+                                {required: 'This field is required'}
+                            )}/>
+                        </InputGroup>
                 </FormControl>
               </form>
             </ModalBody>

@@ -120,7 +120,8 @@ export const ListingView = () => {
                                 <Image src={currentListing.img?currentListing.img:example_spot_image} 
                                     id="profile-avatar" 
                                     onClick={handleProfileImageOnClick}
-                                    alt="image alt" height="256px" width="250px"/>
+                                    alt="image alt" height="256px" width="250px"
+                                    _hover={{opacity: "0.5", transition: "0.5s", cursor: "pointer"}}/>
                             </Box >
                                 <Box width="80%" display="flex" flexDir="column">
                                     <Text fontSize='1.5rem'>Country: {currentListing.iso3166Country}</Text>
