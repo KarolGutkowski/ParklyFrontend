@@ -34,7 +34,6 @@ const AccountUsersPage = () => {
                       textAlign="center">Users</Text>
             </Box>
             <Box display="flex" flexDir="column" width="80%" margin="auto">
-                <UsersSearchBar/>
                 <PaginationMenu pageSize={pageSize} pageNumber={pageNumber} setPageNumber={setPageNumber} setPageSize={setPageSize} pages={pages}/>
                 <UsersTable columnsNamesList={columns} />
             </Box>
