@@ -8,6 +8,7 @@ import { useDisclosure } from "@chakra-ui/react";
 import {ListingsFilters} from "./ListingsFilters";
 import { IconButton } from "@chakra-ui/react";
 import { FilterIcon } from "../AccountPageIcons";
+import { AddListingButton } from "./AddListingButton";
 
 const AccountListingsPage = () => {
 
@@ -25,8 +26,6 @@ const AccountListingsPage = () => {
     }, [pageNumber, pageSize])
 
 
-    const {isOpen, onToggle} = useDisclosure();
-
     return (
         <Box>
             <Box mb='20px'>
@@ -34,6 +33,9 @@ const AccountListingsPage = () => {
                       textAlign="center">Listings</Text>
             </Box>
             <Box display="flex" flexDir="column" width="80%" margin="auto">
+                <Box >
+                    <AddListingButton pageSize={pageSize} pageNumber={pageNumber} />
+                </Box>
                 <Box display="flex" justifyContent="right">
                     {/* <IconButton icon={<FilterIcon/>} onClick={onToggle}/> */}
                     <PaginationMenu pageSize={pageSize} pageNumber={pageNumber} setPageNumber={setPageNumber} setPageSize={setPageSize} pages={pages}/>

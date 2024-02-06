@@ -4,7 +4,6 @@ import { getLoggedInUser, getAuthorizationHeaders } from "../../LoginLogic/login
 export const fetchReservationsForId = async (reservationsSetter, id) =>{
     
     try{
-        debugger;
         const headers = getAuthorizationHeaders()
 
         var requestOptions = {

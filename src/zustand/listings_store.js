@@ -1,6 +1,5 @@
 import {create }from "zustand"
-import { api_address } from "../api_addres"
-import { fetchListings, fetchListingByIdAsync, fetchUpdateListing } from "../Components/AccountPage/Listings/fetchListings";
+import { fetchListings, fetchListingByIdAsync, fetchUpdateListing, fetchAddListing, fetchAddSpotToListing } from "../Components/AccountPage/Listings/fetchListings";
 
 export const useCurrentListingsStore = create((set) => ({ 
   listings: [], // Array to store all listings
@@ -33,5 +32,19 @@ export const useCurrentListingsStore = create((set) => ({
       await state.fetchAllListings(); // Refetch all listings after updating
       await state.fetchListingById(id); // Refetch the current listing after updating
     });
+  },
+
+  addNewListing: async (listingData, page, pageSize) =>
+  {
+    await fetchAddListing(listingData);
+    await set(async (state) => {
+      await state.fetchAllListings(page, pageSize); // Refetch all listings after updating
+    });
+  },
+
+
+  addSpotToParking: async (spot_data) =>
+  {
+    await fetchAddSpotToListing(spot_data);
   }
 }));
